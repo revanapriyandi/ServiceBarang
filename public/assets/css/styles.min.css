@@ -1,0 +1,264 @@
+.vertical-line {
+    border: none;
+    border-left: 1px solid #ccc;
+    height: 100%;
+    width: 1px;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.vertical-line-success {
+    border-left-color: #28a745; /* Warna success */
+}
+
+.vertical-line-warning {
+    border-left-color: #ffc107; /* Warna warning */
+}
+
+.bs-icon {
+    --bs-icon-size: 0.75rem;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--bs-icon-size);
+    width: calc(var(--bs-icon-size) * 2);
+    height: calc(var(--bs-icon-size) * 2);
+    color: var(--bs-primary);
+}
+.bs-icon-xs {
+    --bs-icon-size: 1rem;
+    width: calc(var(--bs-icon-size) * 1.5);
+    height: calc(var(--bs-icon-size) * 1.5);
+}
+.bs-icon-sm {
+    --bs-icon-size: 1rem;
+}
+.bs-icon-md {
+    --bs-icon-size: 1.5rem;
+}
+.bs-icon-lg {
+    --bs-icon-size: 2rem;
+}
+.bs-icon-xl {
+    --bs-icon-size: 2.5rem;
+}
+.bs-icon.bs-icon-primary {
+    color: var(--bs-white);
+    background: var(--bs-primary);
+}
+.bs-icon.bs-icon-primary-light {
+    color: var(--bs-primary);
+    background: rgba(var(--bs-primary-rgb), 0.2);
+}
+.bs-icon.bs-icon-semi-white {
+    color: var(--bs-primary);
+    background: rgba(255, 255, 255, 0.5);
+}
+.bs-icon.bs-icon-rounded {
+    border-radius: 0.5rem;
+}
+.bs-icon.bs-icon-circle {
+    border-radius: 50%;
+}
+
+.bg-gradient-primary {
+    background-color: #060a6f;
+    background-image: linear-gradient(180deg, #060a6f 10%, #060a6f 100%);
+    background-size: cover;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #060a6f;
+    border-color: #060a6f;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #060a6f;
+    border-color: #060a6f;
+}
+.btn-primary.focus,
+.btn-primary:focus {
+    color: #fff;
+    background-color: #323dac;
+    border-color: #323dac;
+    box-shadow: 0 0 0 0.2rem rgba(105, 136, 228, 0.5);
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+    color: #fff;
+    background-color: #060a6f;
+    border-color: #060a6f;
+}
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #060a6f;
+    border-color: #060a6f;
+}
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(105, 136, 228, 0.5);
+}
+.active {
+    color: 060a6f;
+    background: linear-gradient(85deg, #060a6f 12%, #3e429a 95%);
+}
+/* .sidebar .nav-item .nav-link span {
+    font-size: 1rem;
+    display: inline;
+    vertical-align: middle;
+}
+
+.sidebar .nav-item .nav-link i {
+    font-size: 1.3rem;
+    margin-right: 0.25rem;
+    display: inline;
+    vertical-align: middle;
+    padding-right: 1rem;
+} */
+
+.border-left-primary {
+    border-left: 0.5rem solid #060a6f !important;
+}
+.border-left-success {
+    border-left: 0.5rem solid #1cc88a !important;
+}
+
+.border-left-warning {
+    border-left: 0.5rem solid #f6c23e !important;
+}
+.icon-bg-primary,
+.icon-bg-success,
+.icon-bg-warning {
+    border-radius: 100%;
+    padding: 10px;
+    color: #ffffff;
+}
+
+.icon-bg-primary {
+    background: #060a6f;
+}
+
+.icon-bg-success {
+    background: #1cc88a;
+}
+
+.icon-bg-warning {
+    background: #f6c23e;
+}
+
+/*!
+FullCalendar v5.6.0
+Docs & License: https://fullcalendar.io/
+(c) 2020 Adam Shaw
+*/
+
+.fc {
+    background-color: #fff;
+}
+
+.fc-header-toolbar {
+    background-color: #060a6f;
+    color: #ffffff;
+    height: 30px;
+}
+.fc .fc-button-primary {
+    background-color: #060a6f;
+}
+
+.fc-scroller.fc-time-grid-container {
+    background-color: #060a6f;
+}
+
+:root {
+    --fc-border-color: none;
+    --fc-daygrid-event-dot-width: 10px;
+}
+.fc-scrollgrid,
+.fc-theme-standard .fc-scrollgrid {
+    border: none;
+}
+.fc-theme-standard td,
+.fc-theme-standard th {
+    border-color: #e9ecef;
+}
+.fc-theme-standard thead tr th {
+    border-right: none;
+    border-left: none;
+}
+.fc-theme-standard td:last-child {
+    border-right: none;
+}
+.fc-theme-standard tr:last-child td {
+    border-bottom: none;
+}
+.fc-h-event {
+    border: none;
+}
+.fc-daygrid-block-event .fc-event-time,
+.fc-daygrid-block-event .fc-event-title {
+    font-weight: 600;
+    padding: 0.2rem 0.3rem;
+}
+.fc .fc-daygrid-body-natural .fc-daygrid-day-events {
+    margin-bottom: 0;
+}
+.fc .fc-col-header-cell-cushion {
+    font-size: 0.6rem;
+    font-weight: bold;
+    font-weight: 600;
+    color: #adb5bd;
+}
+.fc .fc-daygrid-day-number {
+    color: #495057;
+    font-size: 0.6rem;
+    font-weight: bold;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+}
+.fc .fc-toolbar-title {
+    font-size: 1.125rem;
+}
+.fc .fc-button {
+    padding-top: 0.25rem;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: all 0.15s ease-in;
+}
+.fc .fc-button,
+.fc .fc-button .fc-icon {
+    font-size: 0.6rem;
+    font-weight: bold;
+}
+
+.fc-event.fc-daygrid-event {
+    border-radius: 0.35rem;
+}
+.fc-col-header {
+    display: none;
+}
+
+.fc-daygrid-day-number {
+    text-decoration: none;
+}
+
+@media (max-width: 992px) {
+    .select2 {
+        width: 100% !important;
+    }
+}
+
+.ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.btn-xl {
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+    background-color: #060a6f;
+}
