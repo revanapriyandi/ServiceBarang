@@ -13,6 +13,7 @@ use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\DataServiceController;
 use App\Http\Controllers\InputBarangController;
 use App\Http\Controllers\KonfirmasiBarangController;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,4 +47,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/delete-konfirmasi/{id}', [KonfirmasiBarangController::class, 'deleteKonfirmasi'])->name('delete.konfirmasi');
     Route::get('/get-barang-masuk/{id}', [KonfirmasiBarangController::class, 'getBarangData'])->name('getBarangData');
     Route::post('/update-barang-masuk/{id}', [KonfirmasiBarangController::class, 'updateBarangMasuk'])->name('updateBarangMasuk');
+});
+
+Route::get('/production', function () {
+    Artisan::call('config:cache');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    return 'Production is ready';
 });
