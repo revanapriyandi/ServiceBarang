@@ -42,19 +42,21 @@
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <div class="btn-group">
-                                            <button class="btn btn-warning btn-sm btn-edit"
+                                            <button class="btn btn-warning btn-sm rounded-2 btn-edit mr-1"
                                                 style="color:white">Edit</button>
-                                            <button class="btn btn-success btn-sm btn-save"
+                                            <button class="btn btn-success btn-sm rounded-2 btn-save mr-1"
                                                 style="color:white; display:none">Save</button>
-                                            <button class="btn btn-danger btn-sm btn-cancel"
+                                            <button class="btn btn-secondary btn-sm rounded-2 btn-cancel mr-1"
                                                 style="color:white; display:none">Cancel</button>
-                                            <form action="{{ route('delete.temporary', $index) }}" method="POST">
+                                            <form action="{{ route('delete.temporary', $index) }}" method="POST"
+                                                class="mr-1">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                <button type="submit" class="btn btn-danger btn-sm rounded-2"
                                                     onclick="return confirm('Yakin ingin menghapus data?')">Hapus</button>
                                             </form>
                                         </div>
+
                                     </div>
                                 </td>
 
