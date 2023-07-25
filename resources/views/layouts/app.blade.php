@@ -14,9 +14,8 @@
     <title>{{ config('app.name', 'Daser.Im') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('icon/favicon.ico') }}">
-    <link rel="icon" href="{{ asset('icon/favicon-32x32.ico') }}" type="image/png">
-
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" href="{{ asset('images/icons/icon-128x128.png') }}" type="image/png">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
