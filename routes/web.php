@@ -35,8 +35,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/', [DataServiceController::class, 'index'])->name('service');
     Route::get('/input-barang', [InputBarangController::class, 'index'])->name('service.input');
-    Route::get('/get-teknisi-data/{id}', [InputBarangController::class, 'getTeknisiData']);
-    Route::get('/get-barang-data', [InputBarangController::class, 'getBarangData']);
+    Route::get('/get-teknisi-data/{id}', [InputBarangController::class, 'getTeknisiData'])->name('getTeknisiData');
+    Route::get('/get-barang-data', [InputBarangController::class, 'getBarangData'])->name('getBarangData');
     Route::post('/store-temporary', [InputBarangController::class, 'storeTemporary'])->name('store.temporary');
     Route::delete('/delete-temporary/{id}', [InputBarangController::class, 'deleteTemporary'])->name('delete.temporary');
     Route::post('/store-service', [InputBarangController::class, 'storeService'])->name('store.service');
@@ -45,7 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/konfirmasi-barang', [KonfirmasiBarangController::class, 'index'])->name('service.konfirmasi.barang');
     Route::post('/update-kategori', [KonfirmasiBarangController::class, 'updateKategori'])->name('konfirmasi.kategori');
     Route::delete('/delete-konfirmasi/{id}', [KonfirmasiBarangController::class, 'deleteKonfirmasi'])->name('delete.konfirmasi');
-    Route::get('/get-barang-masuk/{id}', [KonfirmasiBarangController::class, 'getBarangData'])->name('getBarangData');
+    Route::get('/get-barang-masuk/{id}', [KonfirmasiBarangController::class, 'getBarangMasuk'])->name('getBarangMasuk');
     Route::post('/update-barang-masuk/{id}', [KonfirmasiBarangController::class, 'updateBarangMasuk'])->name('updateBarangMasuk');
 });
 

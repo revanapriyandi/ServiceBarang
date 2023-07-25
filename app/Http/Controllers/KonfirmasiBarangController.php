@@ -70,7 +70,8 @@ class KonfirmasiBarangController extends Controller
         Notification::route('telegram', config('services.telegram-bot-api.channel_id'))
             ->notify(new KonfirmasiNotification($ids));
 
-        return redirect()->back()->with('success', 'Data berhasil diperbarui');
+        session()->flash('success', 'Data berhasil diperbarui');
+        return response()->json(['success' => true]);
     }
 
     public function updateBarangMasuk(Request $request, $id)
@@ -97,10 +98,10 @@ class KonfirmasiBarangController extends Controller
         $data = BarangMasuk::findOrFail($id);
         $data->delete();
 
-        return redirect()->back()->with('success', 'Data berhasil dihapus');
+        return response()->json(['success' => true]);
     }
 
-    public function getBarangData(Request $request, $id)
+    public function getBarangMasuk(Request $request, $id)
     {
         $barang = BarangMasuk::findOrFail($id);
 

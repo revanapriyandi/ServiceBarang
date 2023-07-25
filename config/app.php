@@ -44,6 +44,8 @@ return [
 
     'debug' => (bool) env('APP_DEBUG', false),
 
+    'notification_sound' => env('NOTIFICATION_SOUND', true),
+
     /*
     |--------------------------------------------------------------------------
     | Application URL

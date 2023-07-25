@@ -83,17 +83,16 @@
 
     </div>
 
-    @php
-        if (session('success')) {
-            toastr()->success(session('success'));
-        } elseif (session('error')) {
-            toastr()->error(session('error'));
-        } elseif (session('warning')) {
-            toastr()->warning(session('warning'));
-        } elseif (session('info')) {
-            toastr()->info(session('info'));
-        }
-    @endphp
+    @if (config('app.notification_sound'))
+        <audio id="audiotNotifSuccess" controls autoplay style="display: none">
+            <source src="{{ asset('audio/success.ogg') }}" type="audio/ogg">
+            <source src="{{ asset('audio/success.mp3') }}" type="audio/mpeg">
+        </audio>
+        <audio id="audiotNotifError" controls autoplay style="display: none">
+            <source src="{{ asset('audio/error.ogg') }}" type="audio/ogg">
+            <source src="{{ asset('audio/error.mp3') }}" type="audio/mpeg">
+        </audio>
+    @endif
 
     @stack('modal')
     <a class="scroll-to-top rounded" href="#page-top">
@@ -112,7 +111,25 @@
 
     <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
 
-
+    @if (session('success'))
+        <script>
+            toastr.success('{{ session('success') }}').onShown.subscribe(function() {
+                playAudio('audiotNotifSuccess');
+            });
+        </script>
+    @elseif (session('error'))
+        <script>
+            toastr.error('{{ session('error') }}').onShown.subscribe(function() {
+                playAudio('audiotNotifError');
+            });
+        </script>
+    @endif
+    <script>
+        function playAudio(audioId) {
+            var audio = document.getElementById(audioId);
+            audio.play();
+        }
+    </script>
     @stack('scripts')
 </body>
 

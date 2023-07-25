@@ -60,7 +60,6 @@ class InputBarangController extends Controller
         ];
 
         session(['data_temporary' => $dateTemp]);
-
         return redirect()->back()->with('success', 'Barang berhasil ditambahkan');
     }
 

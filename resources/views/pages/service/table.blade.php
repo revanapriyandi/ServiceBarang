@@ -20,7 +20,7 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table-body">
                         @foreach (session('data_temporary', []) as $index => $item)
                             @php
                                 $dataBarang = $barang->where('uid', $item['barang'])->first();
@@ -66,7 +66,9 @@
                     <tfoot class="text-center">
                         <tr class="font-weight-bold">
                             <th colspan="8" class="text-end">Total Point</th>
-                            <th colspan="1">{{ $point }}</th>
+                            <th colspan="1" id="total-point">
+                                {{ $point }}
+                            </th>
                             <th></th>
                         </tr>
                     </tfoot>

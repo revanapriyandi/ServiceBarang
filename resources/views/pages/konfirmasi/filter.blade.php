@@ -7,6 +7,7 @@
             <div class="col-12 col-md-6 mx-auto mx-md-0">
                 <form action="{{ route('service.konfirmasi.barang') }}" method="GET" id="form">
                     <div class="form-group row">
+
                         <label for="teknisi" class="col-sm-3 col-form-label">Teknisi</label>
                         <div class="col-sm-8">
                             <select name="teknisi" id="teknisi"

@@ -17,9 +17,8 @@ class BarangController extends Controller
 
     public function store(BarangRequest $request)
     {
-
         Barang::create([
-            'uid' => $this->generateUid(),
+            'uid' => $request->msc,
             'name' => $request->name,
             'point' => $request->point,
             'desc' => $request->desc
@@ -27,16 +26,6 @@ class BarangController extends Controller
 
         session()->flash('success', 'Barang berhasil ditambahkan');
         return response()->json(200);
-    }
-
-    public function generateUid()
-    {
-        $uid = 'MSC' . mt_rand(100000, 999999);
-        $barang = Barang::where('uid', $uid)->first();
-        if ($barang) {
-            return $this->generateUid();
-        }
-        return $uid;
     }
 
     public function show(Barang $barang)
@@ -47,6 +36,7 @@ class BarangController extends Controller
     public function update(BarangRequest $request, Barang $barang)
     {
         $barang->update([
+            'uid' => $request->msc,
             'name' => $request->name,
             'point' => $request->point,
             'desc' => $request->desc

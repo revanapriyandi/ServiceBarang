@@ -21,6 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>MSC Barang</th>
                                     <th>Nama Barang</th>
                                     <th>Keterangan Barang</th>
                                     <th>Total Barang Masuk</th>
@@ -32,9 +33,13 @@
                                 @foreach ($barang as $index => $data)
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
+                                        <td>{{ $data->uid }}</td>
                                         <td>{{ $data->name }}</td>
                                         <td>{{ $data->desc }}</td>
-                                        <td>-</td>
+                                        @php
+                                            $barangMasuk = \App\Models\BarangMasuk::where('id_barang', $data->id)->count();
+                                        @endphp
+                                        <td>{{ $barangMasuk }}</td>
                                         <td>{{ $data->point }}</td>
                                         <td>
                                             <a href="javascript:;" data-id="{{ $data->id }}"
@@ -75,7 +80,20 @@
                     <div class="modal-body">
                         <div id="form-errors"></div>
                         <div class="form-outline mb-3">
-                            <label for="idadmin" class="col-form-label">{{ __('Nama Barang') }}<span
+                            <label for="msc" class="col-form-label">{{ __('MSC Barang') }}<span
+                                    class="text-danger">*</span></label>
+
+                            <input id="msc" type="text" class="form-control @error('msc') is-invalid @enderror"
+                                name="msc" required autofocus>
+
+                            @error('msc')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                        <div class="form-outline mb-3">
+                            <label for="name" class="col-form-label">{{ __('Nama Barang') }}<span
                                     class="text-danger">*</span></label>
 
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
@@ -128,16 +146,6 @@
 @endsection
 @push('scripts')
     <script>
-        let table = new DataTable('.table', {
-            paging: true,
-            lengthChange: true,
-            searching: true,
-            ordering: true,
-            info: true,
-            autoWidth: true,
-            responsive: true,
-        });
-
         function confirmDelete(id) {
             if (confirm('Are you sure you want to delete this item?')) {
                 document.getElementById('delete-form-' + id).submit();
@@ -148,17 +156,19 @@
             $('#add').click(function() {
                 $('#modal .modal-title').text('Tambah Data');
                 $('#modal input[name="_method"]').val('post');
-                $('#form').attr('action', '/barang');
+                $('#form').attr('action', '{{ route('barang.store') }}');
                 $('#modal').modal('show');
             });
 
-            $('.edit').click(function() {
+            $(document).on('click', '.edit', function() {
                 var id = $(this).data('id');
-                $.get('/barang/' + id, function(data) {
+                $.get('{{ route('barang.show', 'idbarang') }}'.replace('idbarang', id), function(data) {
                     // Set the modal to the state for editing data
                     $('#modal .modal-title').text('Edit Data');
                     $('#modal input[name="_method"]').val('put');
-                    $('#form').attr('action', '/barang/' + id);
+                    $('#form').attr('action', '{{ route('barang.update', 'idbarang') }}'.replace(
+                        'idbarang', id));
+                    $('#modal input[name="msc"]').val(data.uid);
                     $('#modal input[name="name"]').val(data.name);
                     $('#modal input[name="point"]').val(data.point);
                     $('#modal textarea[name="desc"]').val(data.desc);
@@ -169,7 +179,7 @@
             $('#modal').on('hidden.bs.modal', function(e) {
                 $('#form')[0].reset();
                 $('#form-errors').empty();
-                $('#form').attr('action', '/barang');
+                $('#form').attr('action', '{{ route('barang.store') }}');
                 $('#modal input[name="_method"]').val('post');
                 $('#modal .modal-title').text('Tambah Data');
             });
@@ -204,6 +214,15 @@
                     }
                 });
             });
+        });
+        let table = new DataTable('.table', {
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            autoWidth: true,
+            responsive: true,
         });
     </script>
 @endpush

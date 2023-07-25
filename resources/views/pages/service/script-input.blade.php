@@ -5,6 +5,8 @@
            var teknisiOptions = @json($teknisis);
            var barangOptions = @json($barangs);
 
+
+
            function toggleEditInput(element, isEditable, originalValue) {
                if (isEditable) {
                    var text = element.text().trim();
@@ -65,7 +67,7 @@
                };
 
                $.ajax({
-                   url: '/update-temporary/' + id,
+                   url: '{{ route('update.temporary', 'idd') }}'.replace('idd', id),
                    method: 'POST',
                    data: {
                        id: id,
@@ -97,6 +99,55 @@
 
                toggleButtons(row, false);
            });
+
+           $("select").select2({
+               theme: "bootstrap4",
+               className: "form-control form-control-sm text-center",
+               placeholder: "Pilih",
+           });
+
+           $("#teknisi").change(function() {
+               var teknisiId = $(this).val();
+               if (teknisiId) {
+                   $.ajax({
+                       url: "{{ route('getTeknisiData', 'idd') }}".replace('idd', teknisiId),
+                       type: "GET",
+                       success: function(data) {
+                           $("#teknisiName").text(data.name);
+                           $("#teknisiId").text(data.uid);
+                           $("#statusTarget").text(data.status);
+                           $("#point").text(data.point);
+                       },
+                       error: function(jqXHR, textStatus, errorThrown) {
+                           console.log(textStatus, errorThrown);
+                       },
+                   });
+               } else {
+                   $("#teknisiName").text("-");
+                   $("#teknisiId").text("-");
+                   $("#statusTarget").text("-");
+                   $("#point").text("0");
+               }
+           });
+
+
+       });
+
+       new DataTable("#tableBarang");
+
+       function selectBarang(uid, name) {
+           $("#barang").val(uid);
+           $("#modalBarang").modal("hide");
+           $("#form").submit();
+       }
+
+       $("#barang").on("input", function() {
+           var barangValue = $(this).val();
+           var idOrderValue = $("#id_order").val();
+
+           if (idOrderValue !== "" && barangValue !== "") {
+               // Submit the form
+               $("#form").submit();
+           }
        });
    </script>
-   <script src="{{ asset('js/script-service.js') }}"></script>

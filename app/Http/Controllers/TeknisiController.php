@@ -61,7 +61,6 @@ class TeknisiController extends Controller
     {
         $teknisi->delete();
 
-        session()->flash('success', 'Teknisi berhasil dihapus');
-        return response()->json(200);
+        return redirect()->back()->with('success', 'Teknisi berhasil dihapus');
     }
 }

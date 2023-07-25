@@ -146,17 +146,19 @@
             $('#add').click(function() {
                 $('#modal .modal-title').text('Tambah Data');
                 $('#modal input[name="_method"]').val('post');
-                $('#form').attr('action', '/teknisi');
+                $('#form').attr('action', '{{ route('teknisi.store') }}');
                 $('#modal').modal('show');
             });
 
-            $('.edit').click(function() {
+            $(document).on('click', '.edit', function() {
                 var id = $(this).data('id');
-                $.get('/teknisi/' + id, function(data) {
+                $.get('{{ route('teknisi.show', 'idteknisi') }}'.replace(
+                    'idteknisi', id), function(data) {
                     // Set the modal to the state for editing data
                     $('#modal .modal-title').text('Edit Data');
                     $('#modal input[name="_method"]').val('put');
-                    $('#form').attr('action', '/teknisi/' + id);
+                    $('#form').attr('action', '{{ route('teknisi.update', 'idteknisi') }}'.replace(
+                        'idteknisi', id));
                     $('#modal input[name="idteknisi"]').val(data.uid);
                     $('#modal input[name="name"]').val(data.name);
                     $('#modal input[name="email"]').val(data.email);
@@ -167,7 +169,7 @@
             $('#modal').on('hidden.bs.modal', function(e) {
                 $('#form')[0].reset();
                 $('#form-errors').empty();
-                $('#form').attr('action', '/teknisi');
+                $('#form').attr('action', '{{ route('teknisi.store') }}');
                 $('#modal input[name="_method"]').val('post');
                 $('#modal .modal-title').text('Tambah Data');
             });

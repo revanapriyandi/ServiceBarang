@@ -142,17 +142,19 @@
             $('#add').click(function() {
                 $('#modal .modal-title').text('Tambah Data');
                 $('#modal input[name="_method"]').val('post');
-                $('#form').attr('action', '/kategori');
+                $('#form').attr('action', '{{ route('kategori.store') }}');
                 $('#modal').modal('show');
             });
 
-            $('.edit').click(function() {
+            $(document).on('click', '.edit', function() {
                 var id = $(this).data('id');
-                $.get('/kategori/' + id, function(data) {
+                $.get('{{ route('kategori.show', 'idkategori') }}'.replace('idkategori', id), function(
+                    data) {
                     // Set the modal to the state for editing data
                     $('#modal .modal-title').text('Edit Data');
                     $('#modal input[name="_method"]').val('put');
-                    $('#form').attr('action', '/kategori/' + id);
+                    $('#form').attr('action', '{{ route('kategori.update', 'idkategori') }}'
+                        .replace('idkategori', id));
                     $('#modal input[name="name"]').val(data.name);
                     $('#modal textarea[name="desc"]').val(data.desc);
                     $('#modal').modal('show');
@@ -162,7 +164,7 @@
             $('#modal').on('hidden.bs.modal', function(e) {
                 $('#form')[0].reset();
                 $('#form-errors').empty();
-                $('#form').attr('action', '/kategori');
+                $('#form').attr('action', '{{ route('kategori.store') }}');
                 $('#modal input[name="_method"]').val('post');
                 $('#modal .modal-title').text('Tambah Data');
             });

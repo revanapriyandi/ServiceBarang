@@ -16,13 +16,13 @@
             responsive: true,
         });
 
-        $('#form').on('submit', function(e) {
-            e.preventDefault();
+        function fetchDataAndPopulateTable() {
+            var form = $('#form');
 
             $.ajax({
                 type: 'GET',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                url: form.attr('action'),
+                data: form.serialize(),
                 success: function(response) {
                     console.log(response);
 
@@ -81,7 +81,8 @@
                                 kategori.name +
                                 '</option>';
                         });
-
+                        var actionDelete = '{{ route('delete.konfirmasi', 'idd') }}'
+                            .replace('idd', item.id);
                         row += '</select>' +
                             '</td>' +
                             '<td>' + item.teknisi.uid + '</td>' +
@@ -90,12 +91,8 @@
                             '<td>' +
                             '<a href="javascript:;" data-id="' + item.id +
                             '" class="btn btn-warning btn-sm editButton">Edit</a>' +
-                            '<form action="' + item.delete_url +
-                            '" method="POST">' +
-                            '@csrf' +
-                            '@method('DELETE')' +
-                            '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah anda yakin ingin menghapus data ini?\')">Hapus</button>' +
-                            '</form>' +
+                            '<button type="button" class="btn btn-danger btn-sm deleteButton" data-id="' +
+                            item.id + '" >Hapus</button>' +
                             '</td>' +
                             '</tr>';
 
@@ -122,6 +119,38 @@
                     // Anda dapat menangani kesalahan di sini
                 }
             });
+        }
+
+        $(document).on('click', '.deleteButton', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+
+            if (confirm('Apakah anda yakin ingin menghapus data ini?')) {
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '{{ route('delete.konfirmasi', 'idd') }}'.replace('idd', id),
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    success: function(response) {
+                        var tableBody = $('#table-body');
+                        tableBody.empty();
+                        fetchDataAndPopulateTable();
+                        alert('Data Berhasil dihapus');
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+
+        $('#form').on('submit', function(e) {
+            e.preventDefault();
+            fetchDataAndPopulateTable();
+
         });
 
         $(document).on('click', '.editButton', function(e) {
@@ -129,7 +158,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/get-barang-masuk/' + id,
+                url: '{{ route('getBarangMasuk', 'idbarang') }}'.replace('idbarang', id),
                 success: function(response) {
                     $('.idupdate').val(response.id);
                     $('.id_order').val(response.uid);
@@ -155,13 +184,16 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/update-barang-masuk/' + id,
+                url: '{{ route('updateBarangMasuk', 'idbarang') }}'.replace('idbarang', id),
                 data: $(this).serialize(),
                 success: function(response) {
                     // Tutup modal
                     $('#modalEditKonfirmasi').modal('hide');
-                    location.reload();
-                    // Perbarui tabel atau lakukan apa yang Anda inginkan dengan response
+                    //perbaharui tabel tanpa refresh
+                    var tableBody = $('#table-body');
+                    tableBody.empty();
+
+                    fetchDataAndPopulateTable();
                 },
                 error: function(error) {
                     console.log(error);
@@ -169,7 +201,6 @@
                 }
             });
         });
-
 
 
         $('#msc_barang').on('input', function() {
@@ -180,18 +211,19 @@
             $('#form').submit();
         })
 
-
         $("#teknisi").change(function() {
             var teknisiId = $(this).val();
             if (teknisiId) {
                 $.ajax({
-                    url: "/get-teknisi-data/" + teknisiId,
+                    url: '{{ route('getTeknisiData', 'idteknisi') }}'.replace('idteknisi',
+                        teknisiId),
                     type: "GET",
                     success: function(data) {
                         $("#teknisiName").text(data.name);
                         $("#teknisiId").text(data.uid);
                         $("#statusTarget").text(data.status);
                         $("#point").text(data.point);
+                        $('#form').submit();
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.log(textStatus, errorThrown);
@@ -209,7 +241,7 @@
             $("#barang").autocomplete({
                 source: function(request, response) {
                     $.ajax({
-                        url: "/get-barang-data",
+                        url: '{{ route('getBarangData') }}',
                         dataType: "json",
                         data: {
                             term: request.term
