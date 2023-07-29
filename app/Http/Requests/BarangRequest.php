@@ -22,17 +22,17 @@ class BarangRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'msc' => ['required', 'string', 'max:100'],
+            'item_id' => ['required', 'string', 'max:100'],
             'name' => ['required', 'string', 'max:100'],
             'desc' => ['required', 'string'],
             'point' => ['required', 'integer', 'min:0', 'max:100']
         ];
 
         if ($this->method() == 'POST') {
-            $rules['msc'][] = 'unique:barangs,uid';
+            $rules['item_id'][] = 'unique:barangs,uid';
         } elseif ($this->method() == 'PUT') {
-            if ($this->barang->uid !== $this->msc) {
-                $rules['msc'][] = 'unique:barangs,uid,' . $this->barang->id . ',id';
+            if ($this->barang->uid !== $this->item_id) {
+                $rules['item_id'][] = 'unique:barangs,uid,' . $this->barang->id . ',id';
             }
         }
 

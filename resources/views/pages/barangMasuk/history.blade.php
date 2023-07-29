@@ -36,9 +36,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="orderteam" class="col-sm-4 col-form-label">Order Team</label>
+                                    <label for="id_order" class="col-sm-4 col-form-label">ID Order</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="orderteam" id="orderteam" value="{{ old('orderteam') }}"
+                                        <input type="text" name="id_order" id="id_order" value="{{ old('id_order') }}"
                                             class="form-control form-control-sm">
                                     </div>
                                 </div>
@@ -83,6 +83,7 @@
                                     <th>No</th>
                                     <th>Tanggal Input</th>
                                     <th>Order Team </th>
+                                    <th>MSC Barang</th>
                                     <th>Barang</th>
                                     <th>Kategori</th>
                                     <th>ID Teknisi</th>
@@ -96,6 +97,7 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $data->created_at->format('d/m/Y') }}</td>
                                         <td>{{ $data->uid }}</td>
+                                        <td>{{ $data->msc_barang }}</td>
                                         <td>{{ $data->barang->name }}</td>
                                         <td>
                                             @if ($data->kategori->name === 'Closed')
@@ -113,10 +115,9 @@
                                         <td>{{ $data->teknisi->uid }}</td>
                                         <td>{{ $data->teknisi->name }}</td>
                                         <td>
-                                            <a href="javascript:;" data-id="{{ $data->id }}"
+                                            <a href="javascript:;" onclick="alert('Data tidak dizinkan diedit / dihapus.')"
                                                 class="btn btn-warning edit btn-sm">Edit</a>
-                                            <a href="javascript:;"
-                                                onclick="event.preventDefault(); confirmDelete({{ $data->id }});"
+                                            <a href="javascript:;" onclick="alert('Data tidak dizinkan dihapus.')"
                                                 class="btn btn-danger btn-sm">Delete</a>
 
                                             <form id="delete-form-{{ $data->id }}"
@@ -170,6 +171,7 @@
             ordering: true,
             info: true,
             autoWidth: true,
+            pageLength: 20,
             responsive: true,
             dom: 'Bfrtip',
             buttons: [{

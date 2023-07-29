@@ -14,6 +14,7 @@
             info: false,
             autoWidth: true,
             responsive: true,
+            pageLength: 20,
         });
 
         function fetchDataAndPopulateTable() {
@@ -41,7 +42,7 @@
                             '<td>' + formattedDate + '</td>' +
                             '<td>' + item.uid + '</td>' +
                             '<td>' + item.barang.name + '</td>' +
-                            '<td>' + item.barang.uid + '</td>' +
+                            '<td>' + item.msc_barang + '</td>' +
                             '<td>' +
                             '<input type="hidden" name="id[]" value="' + item.id +
                             '">';
@@ -88,12 +89,12 @@
                             '<td>' + item.teknisi.uid + '</td>' +
                             '<td>' + item.teknisi.name + '</td>' +
                             '<td>' + item.barang.point + '</td>' +
-                            '<td>' +
+                            '<td><div class="btn-group">' +
                             '<a href="javascript:;" data-id="' + item.id +
-                            '" class="btn btn-warning btn-sm editButton">Edit</a>' +
+                            '" class="btn btn-warning btn-sm editButton ml-2">Edit</a>' +
                             '<button type="button" class="btn btn-danger btn-sm deleteButton" data-id="' +
                             item.id + '" >Hapus</button>' +
-                            '</td>' +
+                            '</div></td>' +
                             '</tr>';
 
                         tableBody.append(row);
@@ -120,6 +121,11 @@
                 }
             });
         }
+        $(document).on('submit', '#btn-input', function(e) {
+            e.preventDefault();
+            var form = $('#form').submit();
+            // fetchDataAndPopulateTable();
+        })
 
         $(document).on('click', '.deleteButton', function(e) {
             e.preventDefault();
@@ -162,6 +168,7 @@
                 success: function(response) {
                     $('.idupdate').val(response.id);
                     $('.id_order').val(response.uid);
+                    $('.msc_barang').val(response.msc_barang);
                     $('.barang').val(response.id_barang);
                     $('.teknisi').val(response.id_teknisi);
                     $('.kategori').val(response.id_kategori);
@@ -259,7 +266,7 @@
                 minLength: 2,
                 select: function(event, ui) {
                     event.preventDefault();
-                    $("#msc_barang").val(ui.item.value);
+                    $("#uid_barang").val(ui.item.value);
                     $('#barang').val(ui.item.label);
                     $('#form').submit();
                 }

@@ -78,25 +78,12 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Orion 2023</span>
+                        <span>Copyright &copy; {{ config('app.name') }} {{ date('Y') }}</span>
                     </div>
                 </div>
             </footer>
-
         </div>
-
     </div>
-
-    @if (config('app.notification_sound'))
-        <audio id="audiotNotifSuccess" controls autoplay style="display: none">
-            <source src="{{ asset('audio/success.ogg') }}" type="audio/ogg">
-            <source src="{{ asset('audio/success.mp3') }}" type="audio/mpeg">
-        </audio>
-        <audio id="audiotNotifError" controls autoplay style="display: none">
-            <source src="{{ asset('audio/error.ogg') }}" type="audio/ogg">
-            <source src="{{ asset('audio/error.mp3') }}" type="audio/mpeg">
-        </audio>
-    @endif
 
     @stack('modal')
     <a class="scroll-to-top rounded" href="#page-top">
@@ -117,23 +104,13 @@
 
     @if (session('success'))
         <script>
-            toastr.success('{{ session('success') }}').onShown.subscribe(function() {
-                playAudio('audiotNotifSuccess');
-            });
+            toastr.success('{{ session('success') }}');
         </script>
     @elseif (session('error'))
         <script>
-            toastr.error('{{ session('error') }}').onShown.subscribe(function() {
-                playAudio('audiotNotifError');
-            });
+            toastr.error('{{ session('error') }}');
         </script>
     @endif
-    <script>
-        function playAudio(audioId) {
-            var audio = document.getElementById(audioId);
-            audio.play();
-        }
-    </script>
     @stack('scripts')
 </body>
 

@@ -2,17 +2,13 @@
 
 namespace App\Notifications;
 
-use App\Models\User;
-use App\Models\Barang;
-use App\Models\BarangMasuk;
-use App\Models\Kategori;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use NotificationChannels\Telegram\TelegramMessage;
 
-class KonfirmasiNotification extends Notification
+class NotificationBulanBaru extends Notification
 {
     use Queueable;
 
@@ -41,18 +37,8 @@ class KonfirmasiNotification extends Notification
     public function toTelegram($notifiable)
     {
         $data = $this->data;
-        $txt = "Halo,\n\nStatus entri di database Barang Masuk telah berubah. Berikut detailnya:\n\n";
-        foreach ($data as $key => $id) {
-            $data = BarangMasuk::with(['barang', 'teknisi'])->findOrFail($id);
-            $kategori = Kategori::where('id', $data->id_kategori)->first();
-            if (isset($data->id_kategori)) {
-                $txt .= "- Teknisi: {$data->teknisi->name}\n";
-                $txt .= "- Barang: {$data->barang->name}\n";
-                $txt .= "- MSC Barang: {$data->msc_barang}\n";
-                $txt .= "- ID Order: {$data->uid}\n";
-                $txt .= "- Keterangan: {$kategori->name}\n\n";
-            }
-        }
+        $txt = "Halo,\n\nData Service telah direstart untuk bulan ini\n\n";
+
         $txt .= "\nSilakan masuk ke sistem untuk detail lebih lanjut.\n\nSalam Hormat,\n[" . config('app.name') . "]";
         return TelegramMessage::create()
             ->to(config('services.telegram-bot-api.channel_id'))

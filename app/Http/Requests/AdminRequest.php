@@ -25,6 +25,7 @@ class AdminRequest extends FormRequest
             'idadmin' => ['required', 'string', 'max:20'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email:rfc,dns'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ];
 
         if ($this->method() == 'POST') {

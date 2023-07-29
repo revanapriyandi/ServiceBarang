@@ -23,7 +23,7 @@ class AdminController extends Controller
             'uid' => $request->idadmin,
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt('password'),
+            'password' => bcrypt($request->password),
             'role' => 'admin'
         ]);
         session()->flash('success', 'Admin berhasil ditambahkan');

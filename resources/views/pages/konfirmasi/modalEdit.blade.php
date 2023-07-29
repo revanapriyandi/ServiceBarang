@@ -24,9 +24,22 @@
                         @enderror
                     </div>
                     <div class="form-outline mb-3">
+                        <label for="msc_barang" class="col-form-label">{{ __('MSC Barang') }}</label>
+
+                        <input id="msc_barang" type="text"
+                            class="form-control msc_barang @error('msc_barang') is-invalid @enderror" name="msc_barang"
+                            value="" required>
+
+                        @error('msc_barang')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-outline mb-3">
                         <label for="barang" class="col-form-label">{{ __('Barang') }}</label>
                         <select name="barang" id="barang"
-                            class="form-control barang form-control-sm @error('barang') is-invalid @enderror" required>
+                            class="form-control barang @error('barang') is-invalid @enderror" required>
                             <option value="" selected disabled>Pilih barang</option>
                             @foreach ($barang as $data)
                                 <option value="{{ $data->id }}" {{ $data->id == old('barang') ? 'selected' : '' }}>
@@ -44,11 +57,11 @@
                         <label for="teknisi" class="col-form-label">{{ __('Teknisi') }}</label>
 
                         <select name="teknisi" id="teknisi"
-                            class="form-control teknisi form-control-sm @error('teknisi') is-invalid @enderror"
-                            required>
+                            class="form-control teknisi @error('teknisi') is-invalid @enderror" required>
                             <option value="" selected disabled>Pilih Teknisi</option>
                             @foreach ($teknisi as $data)
-                                <option value="{{ $data->id }}" {{ $data->id == old('teknisi') ? 'selected' : '' }}>
+                                <option value="{{ $data->id }}"
+                                    {{ $data->id == old('teknisi') ? 'selected' : '' }}>
                                     {{ $data->name }}
                                 </option>
                             @endforeach
@@ -64,8 +77,7 @@
                         <label for="kategori" class="col-form-label">{{ __('Kategori Konfirmasi') }}</label>
 
                         <select name="kategori" id="kategori"
-                            class="form-control  kategori form-control-sm @error('kategori') is-invalid @enderror"
-                            required>
+                            class="form-control  kategori @error('kategori') is-invalid @enderror" required>
                             <option value="" selected disabled>Pilih Kategori</option>
                             @foreach ($kategori as $data)
                                 <option value="{{ $data->id }}"

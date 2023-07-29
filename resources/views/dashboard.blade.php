@@ -106,7 +106,7 @@
                                 <div class="vertical-line vertical-line-success"></div>
                             </div>
                             <div class="col-md-4">
-                                <div class="h6 pt-3">{{ $totalBarangMasuk }}</div>
+                                <div class="h6 pt-3">{{ $totalBarangMasukPerHari }}</div>
                             </div>
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                                 <div class="vertical-line vertical-line-warning"></div>
                             </div>
                             <div class="col-md-4">
-                                <div class="h6 pt-3">{{ $totalBarangMasuk }}</div>
+                                <div class="h6 pt-3">{{ $barangKeluar }}</div>
                             </div>
                         </div>
                     </div>

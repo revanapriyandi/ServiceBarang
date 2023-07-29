@@ -37,9 +37,10 @@
                                         <td>{{ $data->name }}</td>
                                         <td>{{ $data->desc }}</td>
                                         @php
+                                            $historyBarang = \App\Models\History::where('id_barang', $data->id)->count();
                                             $barangMasuk = \App\Models\BarangMasuk::where('id_barang', $data->id)->count();
                                         @endphp
-                                        <td>{{ $barangMasuk }}</td>
+                                        <td>{{ $barangMasuk + $historyBarang }}</td>
                                         <td>{{ $data->point }}</td>
                                         <td>
                                             <a href="javascript:;" data-id="{{ $data->id }}"
@@ -80,13 +81,13 @@
                     <div class="modal-body">
                         <div id="form-errors"></div>
                         <div class="form-outline mb-3">
-                            <label for="msc" class="col-form-label">{{ __('MSC Barang') }}<span
+                            <label for="item_id" class="col-form-label">{{ __('Item Id') }}<span
                                     class="text-danger">*</span></label>
 
-                            <input id="msc" type="text" class="form-control @error('msc') is-invalid @enderror"
-                                name="msc" required autofocus>
+                            <input id="item_id" type="text" class="form-control @error('item_id') is-invalid @enderror"
+                                name="item_id" required autofocus>
 
-                            @error('msc')
+                            @error('item_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -223,6 +224,7 @@
             info: true,
             autoWidth: true,
             responsive: true,
+            pageLength: 20,
         });
     </script>
 @endpush

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BarangRequest;
 use App\Models\Barang;
+use App\Models\History;
 use Illuminate\Http\Request;
 
 class BarangController extends Controller
@@ -18,7 +19,7 @@ class BarangController extends Controller
     public function store(BarangRequest $request)
     {
         Barang::create([
-            'uid' => $request->msc,
+            'uid' => $request->item_id,
             'name' => $request->name,
             'point' => $request->point,
             'desc' => $request->desc
@@ -36,7 +37,7 @@ class BarangController extends Controller
     public function update(BarangRequest $request, Barang $barang)
     {
         $barang->update([
-            'uid' => $request->msc,
+            'uid' => $request->item_id,
             'name' => $request->name,
             'point' => $request->point,
             'desc' => $request->desc

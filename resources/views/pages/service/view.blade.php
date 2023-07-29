@@ -8,11 +8,17 @@
                 {{ config('app.name') }}</h1>
         </div>
 
+        <style>
+            .table-bordered td {
+                border: 2px solid #dee2e6;
+            }
+        </style>
+
         <!-- Content Row -->
         <div class="row">
             <div class="card p-0">
                 <div class="card-body">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-striped  dataTable">
                         <thead class="text-uppercase text-center align-middle">
                             <tr>
                                 <th scope="col" rowspan="3" class="align-middle text-center">Id Teknisi</th>
@@ -48,9 +54,9 @@
                                     <td class="align-middle text-center">{{ $item['target'] }}&percnt;</td>
                                     <td class="align-middle text-center">
                                         <span
-                                            class="badge badge-{{ $item['user']->status == 1 ? 'success' : 'danger' }}">{{ $item['status'] }}</span>
+                                            class="badge badge-{{ $item['status'] == 'Tercapai' ? 'success' : 'danger' }}">{{ $item['status'] }}</span>
                                     </td>
-                                    <td class="align-middle text-center">{{ $item['user']->point }}</td>
+                                    <td class="align-middle text-center">{{ $item['point'] }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -70,12 +76,14 @@
         </div>
     </div>
 @endsection
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.5/dist/perfect-scrollbar.min.js"></script>
+@push('styles')
     <link href="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.5/css/perfect-scrollbar.min.css" rel="stylesheet">
     <link
         href="https://cdn.datatables.net/v/bs4/jszip-3.10.1/dt-1.13.5/b-2.4.1/b-html5-2.4.1/b-print-2.4.1/datatables.min.css"
         rel="stylesheet">
+@endpush
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.5/dist/perfect-scrollbar.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
@@ -89,7 +97,7 @@
             minScrollbarLength: 20
         });
 
-        let table = new DataTable('.table', {
+        let table = new DataTable('.dataTable', {
             paging: true,
             lengthChange: false,
             searching: false,
@@ -97,6 +105,7 @@
             info: false,
             autoWidth: true,
             responsive: true,
+            pageLength: 20,
             dom: 'Bfrtip',
             buttons: [{
                 extend: 'excelHtml5',

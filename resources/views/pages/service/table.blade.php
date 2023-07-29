@@ -31,12 +31,13 @@
                                 <td class="text-center">{{ $index + 1 }}</td>
                                 <td class="text-center">{{ date('d/m/Y', strtotime($item['created_at'])) }}</td>
                                 <td class="text-center edit-id-order">{{ $item['id_order'] }}</td>
-                                <td class="text-center">{{ $dataBarang->name }}</td>
-                                <td class="text-center edit-barang select-edit selected-value">
-                                    {{ $item['barang'] }}</td>
+                                <td class="text-center edit-barang select-edit selected-value">{{ $dataBarang->name }}
+                                </td>
+                                <td class="text-center edit-msc-barang">
+                                    {{ $item['msc_barang'] }}</td>
                                 <td class="text-center">-</td>
                                 <td class="text-center edit-teknisi select-edit selected-value">
-                                    {{ $item['teknisi'] }}</td>
+                                    {{ $dataTeknisi->uid }}</td>
                                 <td class="text-center ">{{ $dataTeknisi->name }}</td>
                                 <td class="text-center">{{ $dataBarang->point }}</td>
                                 <td class="text-center">

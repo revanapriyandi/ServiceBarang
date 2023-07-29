@@ -85,31 +85,79 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="form-outline mb-3">
-                            <label for="name" class="col-form-label">{{ __('Nama') }}<span
-                                    class="text-red">*</span></label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-outline mb-3">
+                                    <label for="name" class="col-form-label">{{ __('Nama') }}<span
+                                            class="text-red">*</span></label>
 
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
-                                name="name" required autocomplete="false" value="{{ old('name') }}">
+                                    <input id="name" type="text"
+                                        class="form-control @error('name') is-invalid @enderror" name="name" required
+                                        autocomplete="false" value="{{ old('name') }}">
 
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="form-outline mb-3">
+                                    <label for="email" class="col-form-label">{{ __('Email') }}<span
+                                            class="text-red">*</span></label>
+
+                                    <input id="email" type="email"
+                                        class="form-control @error('email') is-invalid @enderror" name="email" required
+                                        autocomplete="false" value="{{ old('email') }}">
+
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="form-outline mb-3">
-                            <label for="email" class="col-form-label">{{ __('Email') }}<span
-                                    class="text-red">*</span></label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-outline mb-3">
+                                    <label for="password" class="col-form-label">{{ __('Password') }}<span
+                                            class="text-red">*</span></label>
 
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" required autocomplete="false" value="{{ old('email') }}">
+                                    <input id="password" type="password"
+                                        class="form-control @error('password') is-invalid @enderror" name="password"
+                                        required autocomplete="false" value="{{ old('password') }}">
 
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                                    @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="form-outline mb-3">
+                                    <label for="password_confirmation"
+                                        class="col-form-label">{{ __('Confirmation Password') }}<span
+                                            class="text-red">*</span></label>
+
+                                    <input id="password_confirmation" type="password"
+                                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                                        name="password_confirmation" required autocomplete="false"
+                                        value="{{ old('password_confirmation') }}">
+
+                                    @error('password_confirmation')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -133,6 +181,7 @@
             info: true,
             autoWidth: true,
             responsive: true,
+            pageLength: 20,
         });
 
         function confirmDelete(id) {

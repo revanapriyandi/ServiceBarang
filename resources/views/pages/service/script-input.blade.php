@@ -5,8 +5,6 @@
            var teknisiOptions = @json($teknisis);
            var barangOptions = @json($barangs);
 
-
-
            function toggleEditInput(element, isEditable, originalValue) {
                if (isEditable) {
                    var text = element.text().trim();
@@ -49,7 +47,7 @@
                var row = $(this).closest('tr');
                var isEditable = $(this).hasClass('btn-edit');
 
-               ['teknisi', 'barang', 'id-order'].forEach(function(item) {
+               ['teknisi', 'barang', 'id-order', 'msc-barang'].forEach(function(item) {
                    toggleEditInput(row.find(`.edit-${item}`), isEditable);
                });
 
@@ -64,6 +62,7 @@
                    teknisi: row.find('.edit-teknisi').find('input, select').val(),
                    barang: row.find('.edit-barang').find('input, select').val(),
                    id_order: row.find('.edit-id-order').find('input, select').val(),
+                   msc_barang: row.find('.edit-msc-barang').find('input, select').val(),
                };
 
                $.ajax({
@@ -91,9 +90,9 @@
            $(document).on('click', '.btn-cancel', function() {
                var row = $(this).closest('tr');
 
-               ['teknisi', 'barang', 'id-order'].forEach(function(item) {
+               ['teknisi', 'barang', 'id-order', 'msc-barang'].forEach(function(item) {
                    var element = row.find(`.edit-${item}`);
-                   var originalValue = element.data('original'); // Get the original value
+                   var originalValue = element.data('original');
                    toggleEditInput(element, false, originalValue);
                });
 
@@ -106,8 +105,7 @@
                placeholder: "Pilih",
            });
 
-           $("#teknisi").change(function() {
-               var teknisiId = $(this).val();
+           function loadTeknisiData(teknisiId) {
                if (teknisiId) {
                    $.ajax({
                        url: "{{ route('getTeknisiData', 'idd') }}".replace('idd', teknisiId),
@@ -128,26 +126,49 @@
                    $("#statusTarget").text("-");
                    $("#point").text("0");
                }
+           }
+
+           var selectedTeknisiId = $("#teknisi").val();
+           loadTeknisiData(selectedTeknisiId);
+
+           // Event listener untuk dropdown teknisi
+           $("#teknisi").change(function() {
+               var teknisiId = $(this).val();
+               loadTeknisiData(teknisiId);
            });
-
-
        });
 
        new DataTable("#tableBarang");
 
        function selectBarang(uid, name) {
            $("#barang").val(uid);
-           $("#modalBarang").modal("hide");
-           $("#form").submit();
        }
 
-       $("#barang").on("input", function() {
-           var barangValue = $(this).val();
-           var idOrderValue = $("#id_order").val();
+       $("#msc_barang").on("input", function() {
+           $('#form').submit()
+       });
 
-           if (idOrderValue !== "" && barangValue !== "") {
-               // Submit the form
-               $("#form").submit();
+
+       document.addEventListener("DOMContentLoaded", function() {
+           const teknisiInput = document.getElementById("teknisi");
+           const barangInput = document.getElementById("barang");
+           const idOrderInput = document.getElementById("id_order");
+           const inputButton = document.getElementById("btn-input");
+
+           // Function to check if any of the input fields are empty
+           function checkInputs() {
+               const teknisiValue = teknisiInput.value;
+               const barangValue = barangInput.value.trim();
+               const idOrderValue = idOrderInput.value.trim();
+
+               const anyInputIsEmpty = teknisiValue === "" || barangValue === "" || idOrderValue === "";
+               inputButton.disabled = anyInputIsEmpty;
            }
+
+           // Event listeners for input fields to call the checkInputs function
+           teknisiInput.addEventListener("input", checkInputs);
+           barangInput.addEventListener("input", checkInputs);
+           idOrderInput.addEventListener("input", checkInputs);
+
        });
    </script>

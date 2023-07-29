@@ -45,9 +45,10 @@ class BarangMasukNotification extends Notification
         foreach ($data as $key => $value) {
             $barang = Barang::where('uid', $value['barang'])->first();
             $teknisi = User::where('id', $value['teknisi'])->first();
-            $txt .= "- Order ID: " . $value['id_order'] . "\n";
-            $txt .= "- Barang: " . $barang->name . "\n";
             $txt .= "- Teknisi: " . $teknisi->name . "\n\n";
+            $txt .= "- Barang: " . $barang->name . "\n\n";
+            $txt .= "- MSC Barang: " . $value['msc_barang'] . "\n";
+            $txt .= "- Order ID: " . $value['id_order'] . "\n";
         }
 
         $txt .= "Silakan masuk ke sistem untuk detail lebih lanjut.\n\nHormat kami,\n" . config('app.name') . "";

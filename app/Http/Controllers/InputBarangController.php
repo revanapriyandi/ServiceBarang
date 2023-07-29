@@ -48,6 +48,7 @@ class InputBarangController extends Controller
             'barang' => ['required', 'exists:barangs,uid'],
             'teknisi' => ['required', 'exists:users,id'],
             'id_order' => ['required'],
+            'msc_barang' => ['required'],
         ]);
 
         $dateTemp = session('data_temporary', []);
@@ -56,6 +57,7 @@ class InputBarangController extends Controller
             'barang' => $request->barang,
             'teknisi' => $request->teknisi,
             'id_order' => $request->id_order,
+            'msc_barang' => $request->msc_barang,
             'created_at' => now()
         ];
 
@@ -81,6 +83,7 @@ class InputBarangController extends Controller
                     'uid' => $data['id_order'],
                     'id_barang' => $barang->id,
                     'id_teknisi' => $data['teknisi'],
+                    'msc_barang' => $data['msc_barang'],
                 ]);
             }
             Notification::send(User::class, new BarangMasukNotification($dataTemp));
@@ -102,6 +105,7 @@ class InputBarangController extends Controller
                 $dataTemp[$key]['teknisi'] = $request['data']['teknisi'];
                 $dataTemp[$key]['id_order'] = $request['data']['id_order'];
                 $dataTemp[$key]['barang'] = $request['data']['barang'];
+                $dataTemp[$key]['msc_barang'] = $request['data']['msc_barang'];
             }
         }
 

@@ -2,6 +2,7 @@
     $dataTemporary = session('data_temporary', []);
     $lastIdOrder = $dataTemporary ? end($dataTemporary)['id_order'] : '';
     $lastTeknisi = $dataTemporary ? end($dataTemporary)['teknisi'] : '';
+    $lastBarang = $dataTemporary ? end($dataTemporary)['barang'] : '';
     $point = 0;
 @endphp
 @extends('layouts.app')

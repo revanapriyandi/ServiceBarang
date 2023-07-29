@@ -1,6 +1,6 @@
 <div class="card p-0 bg-white">
     <div class="card-header bg-white">
-        <h5 class="text-uppercase mt-2 font-weight-bold">Input Barang</h5>
+        <h5 class="text-uppercase mt-2 font-weight-bold">Konfirmasi Barang</h5>
     </div>
     <div class="card-body">
         <div class="row">
@@ -52,6 +52,7 @@
                             @enderror
                         </div>
                     </div>
+                    <input type="hidden" name="uid_barang" id="uid_barang" value="">
                     <div class="form-group row">
                         <label for="msc_barang" class="col-sm-3 col-form-label">MSC Barang</label>
                         <div class="col-sm-8">

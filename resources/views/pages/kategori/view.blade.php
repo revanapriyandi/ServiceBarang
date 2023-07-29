@@ -130,6 +130,7 @@
             info: true,
             autoWidth: true,
             responsive: true,
+            pageLength: 20,
         });
 
         function confirmDelete(id) {

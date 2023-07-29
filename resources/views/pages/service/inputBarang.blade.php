@@ -32,9 +32,9 @@
                         <div class="col-sm-8">
 
                             <div class="input-group">
-                                <input type="text" name="barang" id="barang" required autofocus
+                                <input type="text" name="barang" id="barang" required
                                     class="form-control text-center @error('barang') is-invalid @enderror"
-                                    value="{{ old('barang') }}" autocomplete="">
+                                    value="{{ old('barang') ?: $lastBarang }}" autocomplete="">
                                 <button type="button" id="selectBarang" data-bs-target="#modalBarang"
                                     data-bs-toggle="modal" class="input-group-text btn btn-primary"
                                     style="background-color: #1c2260">Pilih Barang</button>
@@ -60,12 +60,27 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="form-group row col-md-12 text-right">
-                        <div class="col-sm-12">
-                            <button type="submit" class="btn btn-primary " id="btn-input"
-                                style="background-color: #5f64f4">Input</button>
+                    <div class="form-group row">
+                        <label for="msc_barang" class="col-sm-3 col-form-label">MSC Barang</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="msc_barang" id="msc_barang" autocomplete="" autofocus
+                                class="form-control text-center @error('msc_barang') is-invalid @enderror"
+                                value="{{ old('msc_barang') }}" placeholder="MSC" required>
+                            @error('msc_barang')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                     </div>
+                    <div class="form-group row col-md-12 text-right">
+                        <div class="col-sm-12">
+                            <button type="button" data-toggle="modal" data-target="#modalMscBarang"
+                                class="btn btn-primary" id="btn-input" style="background-color: #5f64f4"
+                                disabled>Input</button>
+                        </div>
+                    </div>
+
                 </form>
             </div>
 
