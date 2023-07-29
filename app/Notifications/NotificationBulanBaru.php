@@ -36,7 +36,6 @@ class NotificationBulanBaru extends Notification
      */
     public function toTelegram($notifiable)
     {
-        $data = $this->data;
         $txt = "Halo,\n\nData Service telah direstart untuk bulan ini\n\n";
 
         $txt .= "\nSilakan masuk ke sistem untuk detail lebih lanjut.\n\nSalam Hormat,\n[" . config('app.name') . "]";

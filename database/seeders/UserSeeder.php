@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         //cek apakah tabel users kosong
-        if (User::count() == 0) {
+        if (User::where('email', 'admin@admin.com')->count() == 0) {
             // jika kosong maka buat data dummy
             User::factory()->create([
                 'uid' => 'admin',

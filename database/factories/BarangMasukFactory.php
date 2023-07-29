@@ -19,11 +19,16 @@ class BarangMasukFactory extends Factory
      */
     public function definition(): array
     {
+        $teknisi = optional(User::where('role', 'teknisi')->inRandomOrder()->first())->id;
+        $barang = optional(Barang::inRandomOrder()->first())->id;
+        $kategori = optional(Kategori::inRandomOrder()->first())->id;
+
         return [
             'uid' => sprintf('KBH-%04d-%02d', $this->faker->randomNumber(4), $this->faker->randomNumber(2)),
-            'id_teknisi' => User::where('role', 'teknisi')->inRandomOrder()->first()->id,
-            'id_barang' => Barang::inRandomOrder()->first()->id,
-            'id_kategori' => Kategori::inRandomOrder()->first()->id,
+            'msc_barang' => sprintf('MSC-%04d-%02d', $this->faker->randomNumber(4), $this->faker->randomNumber(2)),
+            'id_teknisi' => $teknisi,
+            'id_barang' => $barang,
+            'id_kategori' => $kategori,
             'created_at' => now(),
             'updated_at' => now(),
         ];

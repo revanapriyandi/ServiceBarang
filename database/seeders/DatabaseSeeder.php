@@ -17,10 +17,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        // Barang::factory(30)->create();
-        BarangMasuk::factory(30)->create();
+        $this->call([
+            UserSeeder::class,
+            KategoriSeeder::class,
+        ]);
 
-        // $this->call(UserSeeder::class);
+        User::factory(10)->create();
+        Barang::factory(30)->create();
+        BarangMasuk::factory(30)->create();
     }
 }

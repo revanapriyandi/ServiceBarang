@@ -17,7 +17,7 @@ class BarangFactory extends Factory
     public function definition(): array
     {
         return [
-            'uid' => 'MSC' . $this->faker->unique()->randomNumber(6),
+            'uid' => 'BRG-' . $this->faker->unique()->randomNumber(6),
             'name' => $this->faker->word(),
             'desc' => $this->faker->sentence(),
             'point' => $this->faker->randomNumber(1),
