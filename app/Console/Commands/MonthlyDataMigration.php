@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\DataServiceController;
+use Exception;
 use Illuminate\Console\Command;
+use App\Notifications\NotificationBulanBaru;
+use Illuminate\Support\Facades\Notification;
+use App\Http\Controllers\DataServiceController;
 
 class MonthlyDataMigration extends Command
 {
@@ -17,6 +20,14 @@ class MonthlyDataMigration extends Command
     {
         $con = new DataServiceController();
         $con->restartData();
+
+        try {
+            Notification::route('telegram', config('services.telegram-bot-api.channel_id'))
+                ->notify(new NotificationBulanBaru($con));
+        } catch (Exception $e) {
+            $this->error($e->getMessage());
+            return;
+        }
 
         $this->info('Data migration success!');
     }
