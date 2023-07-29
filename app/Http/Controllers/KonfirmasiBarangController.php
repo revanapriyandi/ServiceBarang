@@ -58,10 +58,14 @@ class KonfirmasiBarangController extends Controller
             'id.*' => 'exists:barang_masuks,id',
             'kategori' => 'required|array',
             'kategori.*' => 'exists:kategoris,id',
+            'msc_barang' => 'required|array',
+            'id_order' => 'required|array',
         ]);
 
         $ids = $request->id;
         $kategoris = $request->kategori;
+        $mscBarang = $request->msc_barang;
+        $idOrder = $request->id_order;
 
         $point = 0;
         $id_teknisi = 0;
@@ -70,6 +74,8 @@ class KonfirmasiBarangController extends Controller
             if (isset($kategoris[$index])) {
                 $data = BarangMasuk::with('barang')->findOrFail($id);
                 $data->id_kategori = $kategoris[$index];
+                $data->msc_barang = $mscBarang[$index];
+                $data->uid = $idOrder[$index];
                 $data->update();
 
                 $id_teknisi = $data->id_teknisi;
@@ -78,6 +84,7 @@ class KonfirmasiBarangController extends Controller
                 }
             }
         }
+
 
         $point = Barang::whereIn('id', $id_barang)->sum('point');
         $user = User::find($id_teknisi);

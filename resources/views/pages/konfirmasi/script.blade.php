@@ -40,9 +40,12 @@
                         var row = '<tr class="text-center">' +
                             '<td>' + (index + 1) + '</td>' +
                             '<td>' + formattedDate + '</td>' +
-                            '<td>' + item.uid + '</td>' +
+                            '<td><input class="form-control form-sm" name="id_order[]" value="' +
+                            item.uid + '"></td>' +
                             '<td>' + item.barang.name + '</td>' +
-                            '<td>' + item.msc_barang + '</td>' +
+                            '<td><input class="form-control form-sm" name="msc_barang[]" value="' +
+                            item.msc_barang +
+                            '"></td>' +
                             '<td>' +
                             '<input type="hidden" name="id[]" value="' + item.id +
                             '">';
