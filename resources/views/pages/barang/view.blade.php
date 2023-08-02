@@ -21,7 +21,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>MSC Barang</th>
+                                    <th>Item ID</th>
                                     <th>Nama Barang</th>
                                     <th>Keterangan Barang</th>
                                     <th>Total Barang Masuk</th>

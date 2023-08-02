@@ -89,7 +89,7 @@ class DataServiceController extends Controller
         $target = 95;
         $status = 'Tidak Tercapai';
         if ($performa >= 95) {
-            $target = 100;
+            // $target = 100;
             $status = 'Tercapai';
         }
 
