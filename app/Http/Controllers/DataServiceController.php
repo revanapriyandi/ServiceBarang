@@ -70,6 +70,7 @@ class DataServiceController extends Controller
             $teknisi->update([
                 'status' => 0,
                 'point' => 0,
+                'pendapatan' => 0,
             ]);
         }
 
