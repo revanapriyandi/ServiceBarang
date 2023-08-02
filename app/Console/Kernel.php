@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('data:migrate')->monthlyOn(1, '00:00');
+        $schedule->command('data:migrate')->monthly();
     }
 
     /**

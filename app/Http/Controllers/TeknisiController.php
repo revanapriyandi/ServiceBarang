@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Http\Requests\TeknisiRequest;
 use App\Models\Teknisi;
 use App\Models\User;
@@ -11,8 +12,18 @@ class TeknisiController extends Controller
 {
     public function index()
     {
+        $teknisi = User::where('role', 'teknisi')->get();
+
+        $teknisi = $teknisi->map(function ($t) {
+            $pendapatanCalculate = $t->point * config('app.pendapatan_per_point');
+            $t->pendapatan =  $pendapatanCalculate;
+            $t->save();
+            $t->pendapatan = Helper::formatRupiah($pendapatanCalculate);
+            return $t;
+        });
+
         return view('pages.teknisi.view', [
-            'teknisi' => User::where('role', 'teknisi')->get()
+            'teknisi' => $teknisi
         ]);
     }
 

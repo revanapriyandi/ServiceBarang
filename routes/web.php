@@ -49,10 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update-barang-masuk/{id}', [KonfirmasiBarangController::class, 'updateBarangMasuk'])->name('updateBarangMasuk');
 });
 
-Route::get('/production', function () {
-    Artisan::call('config:cache');
-    Artisan::call('cache:clear');
-    Artisan::call('route:clear');
-    Artisan::call('view:clear');
-    return 'Production is ready';
+Route::get('/tes', function () {
+    $con = new DataServiceController();
+    dd($con->restartData());
+    return;
 });

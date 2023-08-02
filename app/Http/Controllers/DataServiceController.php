@@ -56,13 +56,15 @@ class DataServiceController extends Controller
                 'sisa' => $data['sisa'],
             ];
 
+            $point = $teknisi->point ?? 0;
             HistoryTeknisi::create([
                 'id_teknisi' => $teknisi->id,
                 'modul' => json_encode($modul),
                 'performance' => $data['performa'],
                 'target' => $data['target'],
                 'status' => $teknisi->status,
-                'point' => $teknisi->point,
+                'point' => $point,
+                'pendapatan' => $point * config('app.pendapatan_per_point'),
             ]);
 
             $teknisi->update([

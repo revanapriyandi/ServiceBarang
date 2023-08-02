@@ -22,8 +22,9 @@ class DatabaseSeeder extends Seeder
             KategoriSeeder::class,
         ]);
 
-        User::factory(10)->create();
-        Barang::factory(30)->create();
-        BarangMasuk::factory(30)->create();
+        // aktifkan ini jika ingin menggunakan data dummy
+        // User::factory(10)->create();
+        // Barang::factory(30)->create();
+        // BarangMasuk::factory(30)->create();
     }
 }

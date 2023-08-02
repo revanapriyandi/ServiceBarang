@@ -46,6 +46,10 @@ return [
 
     'notification_sound' => env('NOTIFICATION_SOUND', true),
 
+    'gaji' => env('GAJI', 0),
+
+    'pendapatan_per_point' => env('PENDAPATAN_PER_POINT', 0),
+
     /*
     |--------------------------------------------------------------------------
     | Application URL

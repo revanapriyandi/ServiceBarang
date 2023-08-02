@@ -16,6 +16,7 @@ class BarangMasuk extends Model
      */
     protected $guarded = [];
 
+
     public function teknisi()
     {
         return $this->belongsTo(User::class, 'id_teknisi', 'id');
