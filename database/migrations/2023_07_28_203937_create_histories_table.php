@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('uid', 30);
             $table->string('msc_barang')->nullable();
-            $table->foreignId('id_teknisi')->references('id')->on('users');
-            $table->foreignId('id_barang')->references('id')->on('barangs');
-            $table->foreignId('id_kategori')->nullable()->references('id')->on('kategoris');
+            $table->foreignId('id_teknisi')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('id_barang')->references('id')->on('barangs')->cascadeOnDelete();
+            $table->foreignId('id_kategori')->nullable()->references('id')->on('kategoris')->cascadeOnDelete();
             $table->timestamps();
         });
     }

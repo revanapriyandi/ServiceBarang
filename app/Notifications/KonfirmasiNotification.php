@@ -45,6 +45,7 @@ class KonfirmasiNotification extends Notification
         foreach ($data as $key => $id) {
             $data = BarangMasuk::with(['barang', 'teknisi'])->findOrFail($id);
             $kategori = Kategori::where('id', $data->id_kategori)->first();
+
             if (isset($data->id_kategori)) {
                 $txt .= "- Teknisi: {$data->teknisi->name}\n";
                 $txt .= "- Barang: {$data->barang->name}\n";

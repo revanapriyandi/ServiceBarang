@@ -14,35 +14,36 @@ class KategoriSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('kategoris')->insert([
+        DB::table('kategoris')->updateOrInsert(
+            ['id' => 1],
             [
-                'id' => 1,
                 'name' => 'Selesai',
                 'desc' => 'Proses servis sudah selesai dengan kondisi bagus.',
-                'created_at' => Carbon::parse('2023-07-22 23:11:55'),
-                'updated_at' => Carbon::parse('2023-07-22 23:20:57'),
-            ],
+            ]
+        );
+
+        DB::table('kategoris')->updateOrInsert(
+            ['id' => 2],
             [
-                'id' => 2,
                 'name' => 'AWP',
                 'desc' => 'Proses servis sudah membelikan komponen namun sulit ditemukan.',
-                'created_at' => Carbon::parse('2023-07-22 23:16:10'),
-                'updated_at' => Carbon::parse('2023-07-22 23:21:21'),
-            ],
+            ]
+        );
+
+        DB::table('kategoris')->updateOrInsert(
+            ['id' => 3],
             [
-                'id' => 3,
                 'name' => 'OOC',
                 'desc' => 'Proses servis sedang berlangsung dan sedang menunggu komponen.',
-                'created_at' => Carbon::parse('2023-07-22 23:17:32'),
-                'updated_at' => Carbon::parse('2023-07-22 23:17:32'),
-            ],
+            ]
+        );
+
+        DB::table('kategoris')->updateOrInsert(
+            ['id' => 4],
             [
-                'id' => 4,
                 'name' => 'Unrepair',
                 'desc' => 'Barang tidak dapat diperbaiki',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-        ]);
+            ]
+        );
     }
 }

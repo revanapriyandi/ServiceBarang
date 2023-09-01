@@ -48,11 +48,21 @@ class InputBarangController extends Controller
             'barang' => ['required', 'exists:barangs,uid'],
             'teknisi' => ['required', 'exists:users,id'],
             'id_order' => ['required'],
-            'msc_barang' => ['required'],
+            'msc_barang' => ['required', 'unique:barang_masuks,msc_barang']
         ]);
+
+        $barangMasuk = BarangMasuk::where('msc_barang', $request->msc_barang)->first();
+        if ($barangMasuk) {
+            return redirect()->back()->with('error', 'MSC Barang sudah digunakan');
+        }
 
         $dateTemp = session('data_temporary', []);
 
+        foreach ($dateTemp as $item) {
+            if ($item['msc_barang'] == $request->msc_barang) {
+                return redirect()->back()->with('error', 'MSC Barang sudah ditambahkan');
+            }
+        }
         $dateTemp[] = [
             'barang' => $request->barang,
             'teknisi' => $request->teknisi,

@@ -88,7 +88,7 @@
                 <div class="card">
                     <div class="card-body" style="background-color:#e8e8f3; ">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-lg-8 col-md-8 col-12">
                                 <div class="row mb-3">
                                     <div class="col-5 font-weight-bold pt-2">Teknisi</div>
                                     <div class="col-1 pt-2">:</div>
@@ -106,7 +106,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2 col-12" style="margin:auto">
+                            <div class="col-lg-2 col-md-4 col-6" style="margin:auto">
                                 <div class="p-1 text-center"
                                     style="margin: auto; background-color: #d4d4e8; border-radius: 20%; border: 1px solid black;">
                                     <h6 class="font-weight-bold">POINT</h6>

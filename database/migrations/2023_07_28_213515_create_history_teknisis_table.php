@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('history_teknisis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_teknisi')->references('id')->on('users');
+            $table->foreignId('id_teknisi')->references('id')->on('users')->cascadeOnDelete();
             $table->json('modul')->nullable();
             $table->integer('performance')->default(0);
             $table->integer('target')->default(0);

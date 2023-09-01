@@ -36,7 +36,23 @@
     <div class="row justify-content-end pt-3">
         <div class="col-md-2 col-12">
             <button type="submit" class="btn btn-primary btn-block" style="background-color:#5f64f4"
-                onclick="event.preventDefault(); if(confirm('Konfirmasi Barang Masuk ?')) { document.getElementById('formKonfirmasi').submit(); }">Simpan</button>
+                onclick="event.preventDefault(); confirmAndSubmit()">
+                <span id="btnText">Simpan</span>
+                <div class="spinner-border text-light ml-2" role="status" style="display: none;" id="loadingSpinner">
+                </div>
+            </button>
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        function confirmAndSubmit() {
+            if (confirm('Konfirmasi Barang Masuk ?')) {
+                $('#loadingSpinner').show();
+                $('#btnText').hide();
+                document.getElementById('formKonfirmasi').submit();
+            }
+        }
+    </script>
+@endpush

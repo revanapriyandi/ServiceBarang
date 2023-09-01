@@ -84,7 +84,7 @@ class DataServiceController extends Controller
         $ooc = $this->countByKategori($item, 3);
         $unrepair = $this->countByKategori($item, 4);
 
-        $sisa = $diterima - ($selesai + $awp + $ooc);
+        $sisa = $diterima - ($selesai + $awp + $ooc + $unrepair);
         $jumlah = $selesai + $awp + $ooc + $unrepair;
         $performa = $diterima != 0 ? round(($jumlah / $diterima) * 100, 2) : 0;
 
@@ -97,7 +97,11 @@ class DataServiceController extends Controller
 
         $idBarang = $item->barangMasuk->where('id_kategori', '!=', 4)->where('id_kategori', '!=', null)->pluck('id_barang')->toArray();
         //ambil point dari barang
-        $point = Barang::whereIn('id', $idBarang)->sum('point');
+        $point = 0;
+        foreach ($idBarang as $id) {
+            $barang = Barang::where('id', $id)->first();
+            $point += $barang->point;
+        }
 
         User::where('id', $item->id)->update([
             'status' => $status == 'Tercapai' ? 1 : 0,
@@ -109,6 +113,7 @@ class DataServiceController extends Controller
             'selesai' => $selesai,
             'awp' => $awp,
             'ooc' => $ooc,
+            'unrepair' => $unrepair,
             'sisa' => $sisa,
             'performa' => $performa,
             'target' => $target,

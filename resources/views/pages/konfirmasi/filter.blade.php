@@ -67,9 +67,12 @@
                         </div>
                     </div>
                     <div class="form-group row col-md-12 text-right">
-                        <div class="col-sm-12">
-                            <button type="submit" class="btn btn-primary " id="btn-input"
-                                style="background-color: #5f64f4">Search</button>
+                        <div class="d-flex">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-secondary" id="clearAll">Clear</button>
+                                <button type="submit" class="btn btn-primary " id="btn-input"
+                                    style="background-color: #5f64f4">Search</button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -112,3 +115,17 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        $('#clearAll').click(function() {
+            $.ajax({
+                url: "{{ route('clearSessionKonfirmasi') }}",
+                type: "GET",
+                success: function(data) {
+                    window.location.reload();
+                }
+            });
+        });
+    </script>
+@endpush

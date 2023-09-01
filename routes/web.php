@@ -43,6 +43,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update-temporary/{id}', [InputBarangController::class, 'updateTemporary'])->name('update.temporary');
 
     Route::get('/konfirmasi-barang', [KonfirmasiBarangController::class, 'index'])->name('service.konfirmasi.barang');
+    Route::post('/update-to-session', [KonfirmasiBarangController::class, 'updateToSession'])->name('updateToSession');
+    Route::get('/get-konfirmasi-data', [KonfirmasiBarangController::class, 'getDataKonfirmasiSession'])->name('getDataKonfirmasiSession');
+    Route::get('/clear-konfirmasi-data', [KonfirmasiBarangController::class, 'clearSessionKonfirmasi'])->name('clearSessionKonfirmasi');
     Route::post('/update-kategori', [KonfirmasiBarangController::class, 'updateKategori'])->name('konfirmasi.kategori');
     Route::delete('/delete-konfirmasi/{id}', [KonfirmasiBarangController::class, 'deleteKonfirmasi'])->name('delete.konfirmasi');
     Route::get('/get-barang-masuk/{id}', [KonfirmasiBarangController::class, 'getBarangMasuk'])->name('getBarangMasuk');

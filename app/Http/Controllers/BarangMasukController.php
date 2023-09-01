@@ -18,9 +18,10 @@ class BarangMasukController extends Controller
         $id_order = $request->input('id_order');
         $kategori = $request->input('kategori');
         $barang = $request->input('barang');
+        $msc_barang = $request->input('msc_barang');
 
-        $barangMasuk = $this->getBarangMasukData($tanggal, $teknisi, $id_order, $kategori, $barang);
-        $history = $this->getHistoryData($tanggal, $teknisi, $id_order, $kategori, $barang);
+        $barangMasuk = $this->getBarangMasukData($tanggal, $teknisi, $id_order, $kategori, $barang, $msc_barang);
+        $history = $this->getHistoryData($tanggal, $teknisi, $id_order, $kategori, $barang, $msc_barang);
 
         $mergedData = $this->mergeAndDistinctData($barangMasuk, $history);
 
@@ -32,7 +33,7 @@ class BarangMasukController extends Controller
         ]);
     }
 
-    private function getBarangMasukData($tanggal, $teknisi, $id_order, $kategori, $barang)
+    private function getBarangMasukData($tanggal, $teknisi, $id_order, $kategori, $barang, $msc_barang)
     {
         return BarangMasuk::with(['kategori', 'teknisi', 'barang'])
             ->where('id_kategori', '!=', null)
@@ -43,7 +44,7 @@ class BarangMasukController extends Controller
                 return $query->where('id_teknisi', $teknisi);
             })
             ->when($id_order, function ($query, $id_order) {
-                return $query->where('id_order', 'like', '%' . $id_order . '%');
+                return $query->where('uid', 'like', '%' . $id_order . '%');
             })
             ->when($kategori, function ($query, $kategori) {
                 return $query->where('id_kategori', $kategori);
@@ -51,10 +52,13 @@ class BarangMasukController extends Controller
             ->when($barang, function ($query, $barang) {
                 return $query->where('id_barang', $barang);
             })
+            ->when($msc_barang, function ($query, $msc_barang) {
+                return $query->where('msc_barang', $msc_barang);
+            })
             ->get();
     }
 
-    private function getHistoryData($tanggal, $teknisi, $id_order, $kategori, $barang)
+    private function getHistoryData($tanggal, $teknisi, $id_order, $kategori, $barang, $msc_barang)
     {
         return History::with(['kategori', 'teknisi', 'barang'])
             ->when($tanggal, function ($query, $tanggal) {
@@ -64,13 +68,16 @@ class BarangMasukController extends Controller
                 return $query->where('id_teknisi', $teknisi);
             })
             ->when($id_order, function ($query, $id_order) {
-                return $query->where('id_order', 'like', '%' . $id_order . '%');
+                return $query->where('uid', 'like', '%' . $id_order . '%');
             })
             ->when($kategori, function ($query, $kategori) {
                 return $query->where('id_kategori', $kategori);
             })
             ->when($barang, function ($query, $barang) {
                 return $query->where('id_barang', $barang);
+            })
+            ->when($msc_barang, function ($query, $msc_barang) {
+                return $query->where('msc_barang', $msc_barang);
             })
             ->get();
     }

@@ -144,10 +144,17 @@
            $("#barang").val(uid);
        }
 
+       var typingTimer;
+       var doneTypingInterval = 1000;
        $("#msc_barang").on("input", function() {
-           $('#form').submit()
+           clearTimeout(typingTimer);
+           typingTimer = setTimeout(submitForm,
+               doneTypingInterval);
        });
 
+       function submitForm() {
+           $('#form').submit();
+       }
 
        document.addEventListener("DOMContentLoaded", function() {
            const teknisiInput = document.getElementById("teknisi");

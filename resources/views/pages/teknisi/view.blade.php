@@ -24,7 +24,7 @@
                                     <th>Id Teknisi</th>
                                     <th>Nama </th>
                                     <th>Email</th>
-                                    <th>Pendapatan</th>
+                                    {{-- <th>Pendapatan</th> --}}
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -35,7 +35,7 @@
                                         <td>{{ $data->uid }}</td>
                                         <td>{{ $data->name }}</td>
                                         <td>{{ $data->email }}</td>
-                                        <td>{{ $data->pendapatan }}</td>
+                                        {{-- <td>{{ $data->pendapatan }}</td> --}}
                                         <td>
                                             <a href="javascript:;" data-id="{{ $data->id }}"
                                                 class="btn btn-warning edit btn-sm">Edit</a>

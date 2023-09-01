@@ -9,8 +9,17 @@
         </div>
 
         <style>
-            .table-bordered td {
-                border: 2px solid #dee2e6;
+            table.table-bordered {
+                border: 1px solid black;
+                margin-top: 20px;
+            }
+
+            table.table-bordered>thead>tr>th {
+                border: 1px solid black;
+            }
+
+            table.table-bordered>tbody>tr>td {
+                border: 1px solid black;
             }
         </style>
 
@@ -18,12 +27,12 @@
         <div class="row">
             <div class="card p-0">
                 <div class="card-body">
-                    <table class="table table-bordered table-striped  dataTable">
+                    <table class="table table-bordered table-striped dataTable">
                         <thead class="text-uppercase text-center align-middle">
                             <tr>
                                 <th scope="col" rowspan="3" class="align-middle text-center">Id Teknisi</th>
                                 <th scope="col" rowspan="3" class="align-middle text-center">Nama</th>
-                                <th scope="col" colspan="5" class="align-middle text-center">Modul</th>
+                                <th scope="col" colspan="6" class="align-middle text-center">Modul</th>
                                 <th scope="col" rowspan="3" class="align-middle text-center">Performa <br>%</th>
                                 <th scope="col" rowspan="3" class="align-middle text-center">Target <br>%</th>
                                 <th scope="col" rowspan="3" class="align-middle text-center">Status Target</th>
@@ -31,16 +40,17 @@
                             </tr>
                             <tr>
                                 <th scope="col" rowspan="2" class="align-middle text-center">DITERIMA</th>
-                                <th scope="col" colspan="3" class="align-middle text-center">SELESAI</th>
+                                <th scope="col" colspan="4" class="align-middle text-center">SELESAI</th>
                                 <th scope="col" rowspan="2" class="align-middle text-center">SISA</th>
                             </tr>
                             <tr>
                                 <th scope="col" class="align-middle text-center">CLOSE</th>
                                 <th scope="col" class="align-middle text-center">AWP</th>
                                 <th scope="col" class="align-middle text-center">OOC/MITRA</th>
+                                <th scope="col" class="align-middle text-center">UNREPAIR</th>
                             </tr>
                         </thead>
-                        <tbody class="text-uppercase text-center">
+                        <tbody class="text-uppercase text-center font-weight-bold">
                             @foreach ($data as $item)
                                 <tr>
                                     <td class="align-middle text-center">{{ $item['user']->uid }}</td>
@@ -49,6 +59,7 @@
                                     <td class="align-middle text-center">{{ $item['selesai'] }}</td>
                                     <td class="align-middle text-center">{{ $item['awp'] }}</td>
                                     <td class="align-middle text-center">{{ $item['ooc'] }}</td>
+                                    <td class="align-middle text-center">{{ $item['unrepair'] }}</td>
                                     <td class="align-middle text-center">{{ $item['sisa'] }}</td>
                                     <td class="align-middle text-center">{{ $item['performa'] }}&percnt;</td>
                                     <td class="align-middle text-center">{{ $item['target'] }}&percnt;</td>

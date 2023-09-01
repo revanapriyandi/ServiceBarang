@@ -19,7 +19,8 @@
                                     <label for="tanggal" class="col-sm-4 col-form-label">Tanggal</label>
                                     <div class="col-sm-8">
                                         <input type="text" name="tanggal" id="datepicker"
-                                            class="form-control form-control-sm" value="{{ old('tanggal') }}">
+                                            class="form-control form-control-sm"
+                                            value="{{ old('tanggal') ?? request()->tanggal }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -29,16 +30,19 @@
                                             <option value="">Pilih Teknisi</option>
                                             @foreach ($teknisi as $data)
                                                 <option value="{{ $data->id }}"
-                                                    {{ $data->id == old('teknisi') ? 'selected' : '' }}>{{ $data->name }}
+                                                    {{ $data->id == old('teknisi') || $data->id == request()->input('teknisi') ? 'selected' : '' }}>
+                                                    {{ $data->name }}
                                                 </option>
                                             @endforeach
+
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="id_order" class="col-sm-4 col-form-label">ID Order</label>
                                     <div class="col-sm-8">
-                                        <input type="text" name="id_order" id="id_order" value="{{ old('id_order') }}"
+                                        <input type="text" name="id_order" id="id_order"
+                                            value="{{ old('id_order') ?? request()->id_order }}"
                                             class="form-control form-control-sm">
                                     </div>
                                 </div>
@@ -48,10 +52,11 @@
                                     <label for="kategori" class="col-sm-4 col-form-label">Kategori</label>
                                     <div class="col-sm-8">
                                         <select name="kategori" id="kategori" class="form-control form-control-sm">
-                                            <option value="">Pilih Kategori</option>
+                                            <option value="" disabled selected>Pilih Kategori</option>
                                             @foreach ($kategori as $data)
                                                 <option value="{{ $data->id }}"
-                                                    {{ $data->id == old('kategori') ? 'selected' : '' }}>{{ $data->name }}
+                                                    {{ $data->id == request()->kategori ? 'selected' : '' }}>
+                                                    {{ $data->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -61,13 +66,22 @@
                                     <label for="barang" class="col-sm-4 col-form-label">Barang</label>
                                     <div class="col-sm-8">
                                         <select name="barang" id="barang" class="form-control form-control-sm">
-                                            <option value="">Pilih Barang</option>
+                                            <option value="" disabled selected>Pilih Barang</option>
                                             @foreach ($barang as $data)
                                                 <option value="{{ $data->id }}"
-                                                    {{ $data->id == old('barang') ? 'selected' : '' }}>{{ $data->name }}
+                                                    {{ $data->id == request()->barang ? 'selected' : '' }}>
+                                                    {{ $data->name }}
                                                 </option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="msc_barang" class="col-sm-4 col-form-label">MSC Barang</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="msc_barang" id="msc_barang"
+                                            value="{{ old('msc_barang') ?? request()->msc_barang }}"
+                                            class="form-control form-control-sm">
                                     </div>
                                 </div>
                             </div>
@@ -162,53 +176,53 @@
             $('#datepicker').datepicker({
                 uiLibrary: 'bootstrap4'
             });
-        });
 
-        let table = new DataTable('.table', {
-            paging: true,
-            lengthChange: true,
-            searching: true,
-            ordering: true,
-            info: true,
-            autoWidth: true,
-            pageLength: 20,
-            responsive: true,
-            dom: 'Bfrtip',
-            buttons: [{
-                    extend: 'colvis',
-                    text: 'Column'
-                },
-                {
-                    extend: 'copyHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
-                    }
-                },
-                {
-                    extend: 'csvHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
-                    }
-                },
-                {
-                    extend: 'print',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
-                    }
-                },
-            ]
+            let table = new DataTable('.table', {
+                paging: true,
+                lengthChange: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                autoWidth: true,
+                pageLength: 20,
+                responsive: true,
+                dom: 'Bfrtip',
+                buttons: [{
+                        extend: 'colvis',
+                        text: 'Column'
+                    },
+                    {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6]
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6]
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6]
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6]
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5, 6]
+                        }
+                    },
+                ]
+            });
         });
     </script>
 @endpush

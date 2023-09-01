@@ -73,27 +73,25 @@
         <div class="row">
             <!-- Area Chart -->
             <div class="col-xl-9 col-lg-7">
-                <div class="card shadow mb-4">
+                {{-- <div class="card shadow mb-4">
                     <!-- Card Body -->
                     <div class="card-body">
                         <div class="chart-area">
                             <canvas id="chart"></canvas>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card shadow mb-4 ">
                     <!-- Card Body -->
                     <div class="card-body">
-                        <div class="chart-area">
-                            <canvas id="chart2"></canvas>
-                        </div>
+                        <canvas id="chart2"></canvas>
                     </div>
                 </div>
             </div>
 
             <div class="col-xl-3 col-lg-5">
                 <div class="card rounded">
-                    <div id="calendar" style="font-size: 2px"></div>
+                    <div id="calendar" class=" p-0"></div>
                 </div>
                 <br>
                 <div class="card shadow h-15 py-2  rounded-4">
@@ -131,82 +129,85 @@
         </div>
     </div>
 @endsection
+@push('styles')
+    <link href="{{ asset('assets/css/datepicker.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .dow {
+            display: none;
+        }
+    </style>
+@endpush
 @push('scripts')
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    <script src='{{ asset('assets/vendor/datepicker/js/bootstrap-datepicker.min.js') }}'></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const ctx = document.getElementById('chart');
+        $(document).ready(function() {
+            const ctx = document.getElementById('chart');
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: @json($serviceName),
-                datasets: [{
-                    label: 'Service',
-                    data: @json($barangMasukC),
-                    backgroundColor: ['greenyellow', 'lightseagreen', 'yellowgreen', 'Yellow', 'Green',
-                        'Purple', 'Orange'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                maintainAspectRatio: true,
-                responsive: true,
-                scales: {
-                    x: {
-                        display: true, // Tampilkan skala x
-                        beginAtZero: true
-                    },
-                    y: {
-                        display: true, // Tampilkan skala y
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-        const ctx2 = document.getElementById('chart2');
-
-        new Chart(ctx2, {
-            type: 'bar',
-            data: {
-                labels: @json($kategoriName),
-                datasets: [{
-                    label: 'Kategori',
-                    data: @json($kategoriMasukC),
-                    backgroundColor: ['greenyellow', 'lightseagreen', 'yellowgreen', 'Red'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                maintainAspectRatio: true,
-                responsive: true,
-                scales: {
-                    x: {
-                        display: true, // Tampilkan skala x
-                        beginAtZero: true
-                    },
-                    y: {
-                        display: true, // Tampilkan skala y
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                headerToolbar: {
-                    left: 'prev',
-                    center: 'title',
-                    right: 'next'
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @json($serviceName),
+                    datasets: [{
+                        label: 'Service',
+                        data: @json($barangMasukC),
+                        backgroundColor: ['greenyellow', 'lightseagreen', 'yellowgreen', 'Yellow',
+                            'Green',
+                            'Purple', 'Orange'
+                        ],
+                        borderWidth: 1
+                    }]
                 },
+                options: {
+                    maintainAspectRatio: true,
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display: true, // Tampilkan skala x
+                            beginAtZero: true
+                        },
+                        y: {
+                            display: true, // Tampilkan skala y
+                            beginAtZero: true
+                        }
+                    }
+                }
             });
-            calendar.render();
+
+            const ctx2 = document.getElementById('chart2');
+
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: @json($kategoriName),
+                    datasets: [{
+                        label: 'Kategori',
+                        data: @json($kategoriMasukC),
+                        backgroundColor: ['greenyellow', 'lightseagreen', 'yellowgreen', 'Red'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: true,
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display: true, // Tampilkan skala x
+                            beginAtZero: true
+                        },
+                        y: {
+                            display: true, // Tampilkan skala y
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+
+            $('#calendar').datepicker({
+                todayHighlight: true,
+            });
         });
     </script>
 @endpush

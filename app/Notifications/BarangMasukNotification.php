@@ -42,13 +42,14 @@ class BarangMasukNotification extends Notification
         $data = $this->data;
         $txt = "Halo,\n\nEntri baru telah dibuat di database Barang Masuk dengan perincian berikut:\n\n";
         $url = 'https://revanapriyandi.tech/';
+
         foreach ($data as $key => $value) {
             $barang = Barang::where('uid', $value['barang'])->first();
             $teknisi = User::where('id', $value['teknisi'])->first();
-            $txt .= "- Teknisi: " . $teknisi->name . "\n\n";
-            $txt .= "- Barang: " . $barang->name . "\n\n";
+            $txt .= "- Teknisi: " . $teknisi->name . "\n";
+            $txt .= "- Barang: " . $barang->name . "\n";
             $txt .= "- MSC Barang: " . $value['msc_barang'] . "\n";
-            $txt .= "- Order ID: " . $value['id_order'] . "\n";
+            $txt .= "- Order ID: " . $value['id_order'] . "\n\n";
         }
 
         $txt .= "Silakan masuk ke sistem untuk detail lebih lanjut.\n\nHormat kami,\n" . config('app.name') . "";

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\KonfirmasiNotification;
 use Exception;
+use Illuminate\Contracts\Session\Session;
 
 class KonfirmasiBarangController extends Controller
 {
@@ -36,14 +37,32 @@ class KonfirmasiBarangController extends Controller
                 $query->orWhere('id_teknisi', $request->get('teknisi'));
             }
 
+            $dataSession = session('konfirmasi_temporary', []);
+
+            $query->whereNotIn('id', collect($dataSession)->pluck('id'));
+            // Filter data dengan id yang sudah ada di session
+            $data = $query->orderBy('created_at', 'desc')->get();
+
+            $data->map(function ($item) use ($dataSession) {
+                if ($item->id_kategori == null && !in_array($item->id, collect($dataSession)->pluck('id')->toArray())) {
+                    $dataSession[] = [
+                        'id' => $item->id,
+                        'id_kategori' => 1,
+                    ];
+
+                    session(['konfirmasi_temporary' => $dataSession]);
+                }
+            });
+
             $results = [
-                'data' => $query->orderBy('created_at', 'desc')->get(),
+                'data' => $data,
                 'kategori' => Kategori::all(),
             ];
 
             return response()->json($results);
         }
 
+        // session()->forget('konfirmasi_temporary');
         return view('pages.konfirmasi.view', [
             'teknisi' => User::where('role', 'teknisi')->get(),
             'barang' => Barang::all(),
@@ -51,54 +70,64 @@ class KonfirmasiBarangController extends Controller
         ]);
     }
 
+    public function clearSessionKonfirmasi()
+    {
+        session()->forget('konfirmasi_temporary');
+
+        return response()->json(['success' => true]);
+    }
+
     public function updateKategori(Request $request)
     {
-        $request->validate([
-            'id' => 'required|array',
-            'id.*' => 'exists:barang_masuks,id',
-            'kategori' => 'required|array',
-            'kategori.*' => 'exists:kategoris,id',
-            'msc_barang' => 'required|array',
-            'id_order' => 'required|array',
-        ]);
+        $dataSession = session('konfirmasi_temporary', []);
+        $ids = collect($dataSession)->pluck('id');
+        foreach ($dataSession as $item) {
+            $data = BarangMasuk::with(['barang', 'teknisi'])->findOrFail($item['id']);
+            $data->id_kategori = $item['id_kategori'];
+            $data->update();
+        }
 
-        $ids = $request->id;
-        $kategoris = $request->kategori;
+        $idss = $request->id;
         $mscBarang = $request->msc_barang;
         $idOrder = $request->id_order;
 
         $point = 0;
         $id_teknisi = 0;
         $id_barang = [];
-        foreach ($ids as $index => $id) {
-            if (isset($kategoris[$index])) {
-                $data = BarangMasuk::with('barang')->findOrFail($id);
-                $data->id_kategori = $kategoris[$index];
-                $data->msc_barang = $mscBarang[$index];
-                $data->uid = $idOrder[$index];
-                $data->update();
+        foreach ($idss as $index => $id) {
+            $data = BarangMasuk::with('barang')->findOrFail($id);
+            $data->msc_barang = $mscBarang[$index];
+            $data->uid = $idOrder[$index];
+            $data->update();
 
-                $id_teknisi = $data->id_teknisi;
-                if ($data->id_kategori != 4 && $data->id_kategori != null) {
-                    $id_barang[] = $data->barang->id;
-                }
+            $id_teknisi = $data->id_teknisi;
+            if ($data->id_kategori != 4 && $data->id_kategori != null) {
+                $id_barang[] = $data->barang->id;
             }
         }
 
-
-        $point = Barang::whereIn('id', $id_barang)->sum('point');
+        foreach ($id_barang as $id) {
+            $barang = Barang::find($id);
+            if ($barang) {
+                $point += $barang->point;
+            }
+        }
         $user = User::find($id_teknisi);
         if ($user) {
             $user->point = $point;
             $user->update();
         }
 
-        try {
-            Notification::route('telegram', config('services.telegram-bot-api.channel_id'))
-                ->notify(new KonfirmasiNotification($ids));
-        } catch (Exception $e) {
-            session()->flash('error', 'Terjadi kesalahan saat mengirim notifikasi');
+        if (count($dataSession) != 0) {
+            try {
+                Notification::route('telegram', config('services.telegram-bot-api.channel_id'))
+                    ->notify(new KonfirmasiNotification($ids));
+            } catch (Exception $e) {
+                session()->flash('error', 'Terjadi kesalahan saat mengirim notifikasi');
+            }
         }
+
+        session()->forget('konfirmasi_temporary');
 
         session()->flash('success', 'Data berhasil diperbarui');
         return redirect()->back();
@@ -109,6 +138,62 @@ class KonfirmasiBarangController extends Controller
         return $item->filter(function ($barangMasuk) use ($kategori) {
             return $barangMasuk->id_kategori == $kategori;
         })->count();
+    }
+
+    public function updateToSession(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'kategori' => 'required',
+        ]);
+
+        $id = $request->id;
+        $kategori = $request->kategori;
+
+        $dateTemp = session('konfirmasi_temporary', []);
+
+        $found = false;
+        foreach ($dateTemp as $index => $item) {
+            if ($item['id'] == $id) {
+                $dateTemp[$index]['id_kategori'] = $kategori;
+                $found = true;
+            }
+        }
+
+        if (!$found) {
+            $dateTemp[] = [
+                'id' => $id,
+                'id_kategori' => $kategori,
+            ];
+        }
+
+        session(['konfirmasi_temporary' => $dateTemp]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $dateTemp,
+        ]);
+    }
+
+
+    public function getDataKonfirmasiSession()
+    {
+        $data = session('konfirmasi_temporary', []);
+
+        $data = collect($data)->map(function ($item) {
+            $barangMasuk = BarangMasuk::with(['barang', 'teknisi', 'kategori'])->findOrFail($item['id']);
+
+            $barangMasuk->id_kategori = $item['id_kategori'];
+            return $barangMasuk;
+        });
+
+
+        $results = [
+            'data' => $data,
+            'kategori' => Kategori::all(),
+        ];
+
+        return response()->json($results);
     }
 
     public function updateBarangMasuk(Request $request, $id)
@@ -144,8 +229,6 @@ class KonfirmasiBarangController extends Controller
         $data->id_teknisi = $request->teknisi;
         $data->id_kategori = $request->kategori;
         $data->save();
-
-
 
         return response()->json(['success' => true]);
     }

@@ -215,16 +215,17 @@
                     }
                 });
             });
-        });
-        let table = new DataTable('.table', {
-            paging: true,
-            lengthChange: true,
-            searching: true,
-            ordering: true,
-            info: true,
-            autoWidth: true,
-            responsive: true,
-            pageLength: 20,
+
+            let table = new DataTable('.table', {
+                paging: true,
+                lengthChange: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                autoWidth: true,
+                responsive: true,
+                pageLength: 20,
+            });
         });
     </script>
 @endpush
