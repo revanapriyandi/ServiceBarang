@@ -64,6 +64,14 @@
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Dashboard
                 </a>
+                <a class="dropdown-item" href="{{ route('web.setting') }}">
+                    <i class="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Web Settings
+                </a>
+                <a class="dropdown-item" href="{{ route('env-editor.index') }}">
+                    <i class="fas fa-cog fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Env Editor
+                </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal"
                     onclick="event.preventDefault(); if(confirm('Apakah Anda yakin ingin keluar?')) { document.getElementById('logout-form').submit(); }">

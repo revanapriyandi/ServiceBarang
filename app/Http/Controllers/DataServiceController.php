@@ -64,13 +64,11 @@ class DataServiceController extends Controller
                 'target' => $data['target'],
                 'status' => $teknisi->status,
                 'point' => $point,
-                'pendapatan' => $point * config('app.pendapatan_per_point'),
             ]);
 
             $teknisi->update([
                 'status' => 0,
                 'point' => 0,
-                'pendapatan' => 0,
             ]);
         }
 

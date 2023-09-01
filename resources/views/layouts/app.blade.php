@@ -68,6 +68,7 @@
                 <!-- End of Topbar -->
                 <div class="div" style="margin-left:30px; margin-right:30px">
                     <div class="container">
+                        <h2 class="mb-4">@stack('documentTitle')</h2>
                         @yield('content')
                     </div>
                 </div>
@@ -101,6 +102,10 @@
     <script src="{{ asset('assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/sb-admin-2.min.js') }}"></script>
+
+    @if (request()->routeIs('env-editor.*'))
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+    @endif
 
     @if (session('success'))
         <script>

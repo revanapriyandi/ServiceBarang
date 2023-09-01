@@ -22,24 +22,30 @@ class DatabaseSeeder extends Seeder
             KategoriSeeder::class,
         ]);
 
-        // aktifkan ini jika ingin menggunakan data dummy
-        User::factory(10)->create();
-        Barang::factory(30)->create();
-        BarangMasuk::factory(30)->create();
+        $seeder = session('seeder');
 
-        //perbaharui point teknisi
-        $teknisi = User::where('role', 'teknisi')->get();
-        foreach ($teknisi as $key => $value) {
-            $barangMasuk = BarangMasuk::with('barang')->where('id_teknisi', $value->id)->get();
+        if ($seeder == 'dummy') {
+            // aktifkan ini jika ingin menggunakan data dummy
+            User::factory(10)->create();
+            Barang::factory(30)->create();
+            BarangMasuk::factory(30)->create();
 
-            $point = 0;
-            foreach ($barangMasuk as $key => $bm) {
-                $point += $bm->barang->point;
+            //perbaharui point teknisi
+            $teknisi = User::where('role', 'teknisi')->get();
+            foreach ($teknisi as $key => $value) {
+                $barangMasuk = BarangMasuk::with('barang')->where('id_teknisi', $value->id)->get();
+
+                $point = 0;
+                foreach ($barangMasuk as $key => $bm) {
+                    $point += $bm->barang->point;
+                }
+
+                $value->update([
+                    'point' => $point,
+                ]);
             }
-
-            $value->update([
-                'point' => $point,
-            ]);
         }
+
+        session()->forget('seeder');
     }
 }

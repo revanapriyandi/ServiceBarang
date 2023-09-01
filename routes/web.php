@@ -13,6 +13,7 @@ use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\DataServiceController;
 use App\Http\Controllers\InputBarangController;
 use App\Http\Controllers\KonfirmasiBarangController;
+use App\Http\Controllers\WebSettingController;
 use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
@@ -50,10 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/delete-konfirmasi/{id}', [KonfirmasiBarangController::class, 'deleteKonfirmasi'])->name('delete.konfirmasi');
     Route::get('/get-barang-masuk/{id}', [KonfirmasiBarangController::class, 'getBarangMasuk'])->name('getBarangMasuk');
     Route::post('/update-barang-masuk/{id}', [KonfirmasiBarangController::class, 'updateBarangMasuk'])->name('updateBarangMasuk');
-});
 
-Route::get('/tes', function () {
-    $con = new DataServiceController();
-    dd($con->restartData());
-    return;
+    Route::get('/web-setting', [WebSettingController::class, 'index'])->name('web.setting');
+    Route::post('/setting/database/dummy', [WebSettingController::class, 'dummy'])->name('setting.database.dummy');
 });
